@@ -1,15 +1,17 @@
-import { auth, signOut, signIn } from '@/auth';
-import { LogOut } from 'lucide-react';
-import Image from 'next/image';
+import { auth, signIn, signOut } from '@/auth';
+import { Button } from '@/components/ui/button';
+import { LogIn, Zap } from 'lucide-react';
 
 const Navbar = async () => {
   const session = await auth();
-
   return (
-    <header className="px-5 py-3 bg-gray-500 shadow-sm ">
-      <nav className="flex justify-between items-center">
-        <Image src="/logo.png" alt="logo" width={40} height={40} />
-        {session && session?.user ? (
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ">
+      <nav className="container flex h-14 max-w-[1400px] items-center justify-between px-3 md:px-8">
+        <div className="flex items-center gap-2 font-semibold">
+          <Zap className="h-5 w-5 text-[#6a7bff]" />
+          <span className="hidden md:inline-block">EventsHub</span>
+        </div>
+        {session?.user ? (
           <form
             action={async () => {
               'use server';
@@ -17,10 +19,13 @@ const Navbar = async () => {
               await signOut({ redirectTo: '/' });
             }}
           >
-            <button type="submit" className="flex items-center">
-              <span>Logout</span>
-              <LogOut className="size-6 sm:hidden text-red-500" />
-            </button>
+            <Button
+              size="sm"
+              className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white text-sm font-medium"
+            >
+              <LogIn className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
           </form>
         ) : (
           <form
@@ -30,7 +35,13 @@ const Navbar = async () => {
               await signIn('google');
             }}
           >
-            <button type="submit">Inregistreaza-te</button>
+            <Button
+              size="sm"
+              className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white text-sm font-medium"
+            >
+              <LogIn className="h-4 w-4 mr-2" />
+              Conectare
+            </Button>
           </form>
         )}
       </nav>
