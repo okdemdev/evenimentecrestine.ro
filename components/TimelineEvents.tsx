@@ -99,7 +99,7 @@ export default function TimelineEvents({ events }: TimelineEventsProps) {
 
                     {/* Event Card */}
                     <div className="ml-16 md:ml-32 max-w-full md:max-w-2xl transform group-hover:-translate-y-1 transition-all duration-300">
-                      <div className="bg-white rounded-lg border border-gray-100 overflow-hidden group-hover:shadow-lg group-hover:border-[#6a7bff]/10 transition-transform hover:scale-[1.02] duration-300">
+                      <div className="bg-white rounded-lg border border-gray-100 overflow-hidden group-hover:shadow-lg group-hover:border-[#6a7bff]/10 transition-transform hover:scale-[1.02] duration-300 p-4">
                         <div className="flex flex-col md:flex-row">
                           {/* Image Container */}
                           <div className="relative w-full md:w-48 lg:w-56">
@@ -117,7 +117,7 @@ export default function TimelineEvents({ events }: TimelineEventsProps) {
                           {/* Content Container */}
                           <div className="flex-1 p-3 md:p-4">
                             <div className="flex items-center gap-3 text-sm text-gray-500 mb-2">
-                              <div className="flex items-center gap-1">
+                              <div className="flex items-center gap-1 mt-2">
                                 <Clock className="w-4 h-4 shrink-0" />
                                 <span>{event.hour}</span>
                               </div>
