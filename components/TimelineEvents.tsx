@@ -102,16 +102,15 @@ export default function TimelineEvents({ events }: TimelineEventsProps) {
                       <div className="bg-white rounded-lg border border-gray-100 overflow-hidden group-hover:shadow-lg group-hover:border-[#6a7bff]/10 transition-transform hover:scale-[1.02] duration-300 p-4">
                         <div className="flex flex-col md:flex-row">
                           {/* Image Container */}
-                          <div className="relative w-full md:w-48 lg:w-56">
+                          <div className="relative w-full md:w-48 lg:w-56 ">
                             <div className="aspect-[4/3] md:aspect-auto md:h-full">
                               <img
                                 src={event.image}
                                 alt={event.title}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover rounded-lg"
                                 loading="lazy"
                               />
                             </div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent md:hidden" />
                           </div>
 
                           {/* Content Container */}
