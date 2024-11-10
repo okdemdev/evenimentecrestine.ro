@@ -145,6 +145,20 @@ export const evenimente: EventCardType[] = [
     organizer: 'Jazz Association',
     price: 'Gratuit',
   },
+  {
+    _id: '10',
+    title: 'Festival de Jazz',
+    hour: '19:00',
+    month: 'Septembrie',
+    day: '11',
+    location: 'Piața Centrală, Timișoara',
+    category: 'concerte',
+    about: 'Festival internațional de jazz',
+    image:
+      'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=2670&auto=format&fit=crop',
+    organizer: 'Jazz Association',
+    price: 'Gratuit',
+  },
 ];
 
 async function App() {
