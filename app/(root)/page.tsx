@@ -15,6 +15,7 @@ export interface EventCardType {
   about: string;
   image: string;
   organizer: string;
+  price: string;
 }
 
 export const evenimente: EventCardType[] = [
@@ -30,6 +31,7 @@ export const evenimente: EventCardType[] = [
     image:
       'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=2574&auto=format&fit=crop',
     organizer: 'Primăria Ploiești',
+    price: 'Gratuit',
   },
   {
     _id: '2',
@@ -43,6 +45,7 @@ export const evenimente: EventCardType[] = [
     image:
       'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=2580&auto=format&fit=crop',
     organizer: 'Asociația Artiștilor',
+    price: 'Gratuit',
   },
   {
     _id: '3',
@@ -56,6 +59,7 @@ export const evenimente: EventCardType[] = [
     image:
       'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=2574&auto=format&fit=crop',
     organizer: 'Clubul Fotografilor',
+    price: 'Gratuit',
   },
   {
     _id: '4',
@@ -69,6 +73,7 @@ export const evenimente: EventCardType[] = [
     image:
       'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=2669&auto=format&fit=crop',
     organizer: 'Teatrul Municipal',
+    price: '130 lei',
   },
   {
     _id: '5',
@@ -82,6 +87,7 @@ export const evenimente: EventCardType[] = [
     image:
       'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=2670&auto=format&fit=crop',
     organizer: 'Asociația Restaurantelor',
+    price: 'Gratuit',
   },
   {
     _id: '6',
@@ -95,6 +101,7 @@ export const evenimente: EventCardType[] = [
     image:
       'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=2670&auto=format&fit=crop',
     organizer: 'Asociația Nutriționiștilor',
+    price: 'Gratuit',
   },
   {
     _id: '7',
@@ -108,6 +115,7 @@ export const evenimente: EventCardType[] = [
     image:
       'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=2670&auto=format&fit=crop',
     organizer: 'Rock Events',
+    price: '25 lei',
   },
   {
     _id: '8',
@@ -121,6 +129,7 @@ export const evenimente: EventCardType[] = [
     image:
       'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=2670&auto=format&fit=crop',
     organizer: 'Jazz Association',
+    price: 'Gratuit',
   },
   {
     _id: '9',
@@ -134,6 +143,7 @@ export const evenimente: EventCardType[] = [
     image:
       'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=2670&auto=format&fit=crop',
     organizer: 'Jazz Association',
+    price: 'Gratuit',
   },
 ];
 

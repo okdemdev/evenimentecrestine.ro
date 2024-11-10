@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { CalendarIcon, Clock3Icon, LocateIcon } from 'lucide-react';
+import Link from 'next/link';
 
 interface EventCardType {
   _id: string;
@@ -12,7 +13,23 @@ interface EventCardType {
   category: string;
   about: string;
   image: string;
+  price: string;
 }
+
+const PriceTag = ({ price }: { price: string }) => {
+  if (price.toLowerCase() === 'gratuit') {
+    return (
+      <span className="text-green-500 bg-green-200/50 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium">
+        Gratuit
+      </span>
+    );
+  }
+  return (
+    <span className="text-[#6a7bff] bg-[#6a7bff]/10 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium">
+      {price} RON
+    </span>
+  );
+};
 
 export default function EventCard({ event }: { event: EventCardType }) {
   return (
@@ -47,12 +64,12 @@ export default function EventCard({ event }: { event: EventCardType }) {
         </div>
       </CardContent>
       <CardFooter className="px-3 md:px-4 pb-3 md:pb-4 pt-0 flex justify-between items-center">
-        <span className="text-green-500 bg-green-200/50 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium">
-          Gratuit
-        </span>
-        <Button className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white h-7 md:h-8 text-xs md:text-sm px-2.5 md:px-3">
-          Vezi Detalii
-        </Button>
+        <PriceTag price={event.price} />
+        <Link href={`/events/${event._id}`} passHref>
+          <Button className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white h-7 md:h-8 text-xs md:text-sm px-2.5 md:px-3">
+            Vezi Detalii
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

@@ -9,4 +9,5 @@ export interface EventCardType {
   about: string;
   image: string;
   organizer: string;
+  price: string;
 }

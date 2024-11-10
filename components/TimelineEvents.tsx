@@ -1,6 +1,8 @@
 import React from 'react';
-import { Clock, MapPin, CalendarIcon, LocateIcon } from 'lucide-react';
+import { Clock, MapPin } from 'lucide-react';
 import { EventCardType } from '@/app';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 interface TimelineEventsProps {
   events: EventCardType[];
@@ -40,6 +42,21 @@ const getMonthNumber = (month: string): number => {
     Decembrie: 12,
   };
   return monthMap[month] || 0;
+};
+
+const PriceTag = ({ price }: { price: string }) => {
+  if (price.toLowerCase() === 'gratuit') {
+    return (
+      <span className="text-green-500 bg-green-200/50 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium">
+        Gratuit
+      </span>
+    );
+  }
+  return (
+    <span className="text-[#6a7bff] bg-[#6a7bff]/10 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium">
+      {price} RON
+    </span>
+  );
 };
 
 export default function TimelineEvents({ events }: TimelineEventsProps) {
@@ -134,12 +151,17 @@ export default function TimelineEvents({ events }: TimelineEventsProps) {
                             <p className="text-gray-600 text-sm mb-3 line-clamp-2">{event.about}</p>
 
                             <div className="flex items-center justify-between gap-2">
-                              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#6a7bff]/5 text-[#6a7bff]">
-                                {event.category}
-                              </span>
-                              <button className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white h-7 text-xs px-2.5 rounded-md transition-colors duration-200">
-                                Vezi Detalii
-                              </button>
+                              <div className="flex items-center gap-2">
+                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#6a7bff]/5 text-[#6a7bff]">
+                                  {event.category}
+                                </span>
+                                <PriceTag price={event.price} />
+                              </div>
+                              <Link href={`/events/${event._id}`}>
+                                <Button className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white h-7 text-xs px-2.5">
+                                  Vezi Detalii
+                                </Button>
+                              </Link>
                             </div>
                           </div>
                         </div>
