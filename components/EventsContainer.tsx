@@ -56,8 +56,8 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
   }, [filteredByLocation, selectedCity, city]);
 
   const handleRequestLocation = () => {
-    requestGeolocation();
     setShowPermissionPopup(false);
+    requestGeolocation();
   };
 
   const locationText = loading
@@ -68,16 +68,23 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
     ? `Evenimente din ${selectedCity}`
     : `Evenimente din ${city}, ${country}`;
 
+  const getEventsHeading = () => {
+    if (loading) return 'Evenimente disponibile';
+    if (selectedCity) return `Evenimente din ${selectedCity}`;
+    if (city && !selectedCity) return 'Evenimente din aproprierea ta';
+    return 'Evenimente disponibile';
+  };
+
   return (
     <>
       <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
         <CategoryFilter activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
-        <CityFilter selectedCity={selectedCity} onCityChange={setSelectedCity} />
+        <CityFilter selectedCity={selectedCity} onCityChange={setSelectedCity} userCity={city} />
       </div>
 
       <div className="mt-6 md:mt-8 mb-3 md:mb-4">
         <div className="flex justify-between items-center">
-          <h2 className="text-base md:text-xl font-bold text-[#333]">Evenimente disponibile</h2>
+          <h2 className="text-base md:text-xl font-bold text-[#333]">{getEventsHeading()}</h2>
           <button className="text-xs md:text-sm text-[#6a7bff] font-semibold flex items-center gap-1 hover:gap-2 transition-all">
             Vezi toate
             <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4" />
@@ -102,7 +109,7 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
       </div>
 
       <div className="flex justify-between items-center mt-4">
-        <h2 className="text-base md:text-xl font-bold text-[#333]">Evenimente care vor urma</h2>
+        <h2 className="text-base md:text-xl font-bold text-[#333]">Toate evenimentele</h2>
         <button className="text-xs md:text-sm text-[#6a7bff] font-semibold flex items-center gap-1 hover:gap-2 transition-all">
           Vezi toate
           <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4" />

@@ -1,15 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 import { romanianCities } from '@/utils/cities';
 
 interface CityFilterProps {
   selectedCity: string;
   onCityChange: (city: string) => void;
+  userCity: string | null;
 }
 
-export default function CityFilter({ selectedCity, onCityChange }: CityFilterProps) {
+export default function CityFilter({ selectedCity, onCityChange, userCity }: CityFilterProps) {
+  // Automatically set the city when userCity changes
+  useEffect(() => {
+    if (userCity && romanianCities.includes(userCity) && !selectedCity) {
+      onCityChange(userCity);
+    }
+  }, [userCity, onCityChange, selectedCity]);
+
   return (
     <div className="flex items-center gap-2">
       <MapPin className="w-6 h-6 text-[#6a7bff]" />
