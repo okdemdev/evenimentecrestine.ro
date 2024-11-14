@@ -6,6 +6,7 @@ import CategoryFilter from './CategoryFilter';
 import EventCard from './EventCard';
 import TimelineEvents from './TimelineEvents';
 import CityFilter from './CityFilter';
+import LocationPermissionPopup from './LocationPermissionPopup';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { sortEventsByDateAndLocation } from '@/utils/eventUtils';
 import type { EventCardType } from '@/app/(root)/page';
@@ -17,7 +18,15 @@ interface EventsContainerProps {
 export default function EventsContainer({ evenimente }: EventsContainerProps) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedCity, setSelectedCity] = useState('');
-  const { city, country, loading, error } = useGeolocation();
+  const {
+    city,
+    country,
+    loading,
+    error,
+    showPermissionPopup,
+    setShowPermissionPopup,
+    requestGeolocation,
+  } = useGeolocation();
 
   const filteredAndSortedEvents = useMemo(() => {
     // First filter by category
@@ -37,6 +46,11 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
     return sortEventsByDateAndLocation(filteredEvents, selectedCity || city);
   }, [evenimente, activeCategory, selectedCity, city]);
 
+  const handleRequestLocation = () => {
+    requestGeolocation();
+    setShowPermissionPopup(false);
+  };
+
   const locationText = loading
     ? 'Se încarcă locația...'
     : error || (!city && !selectedCity)
@@ -49,9 +63,10 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
     <>
       <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
         <CategoryFilter activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
+        <CityFilter selectedCity={selectedCity} onCityChange={setSelectedCity} />
       </div>
-      <CityFilter selectedCity={selectedCity} onCityChange={setSelectedCity} />
-      <div className="mt-4 md:mt-4 mb-3 md:mb-4">
+
+      <div className="mt-6 md:mt-8 mb-3 md:mb-4">
         <div className="flex justify-between items-center">
           <h2 className="text-base md:text-xl font-bold text-[#333]">Evenimente disponibile</h2>
 
@@ -90,6 +105,13 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
       </div>
 
       <TimelineEvents events={filteredAndSortedEvents} />
+
+      {showPermissionPopup && (
+        <LocationPermissionPopup
+          onClose={() => setShowPermissionPopup(false)}
+          onRequestLocation={handleRequestLocation}
+        />
+      )}
     </>
   );
 }

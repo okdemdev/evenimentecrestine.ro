@@ -2,24 +2,27 @@
 
 import { useState, useEffect } from 'react';
 
-interface Location {
-  city: string;
-  country: string;
+interface GeolocationState {
+  city: string | null;
+  country: string | null;
   loading: boolean;
   error: string | null;
 }
 
 export function useGeolocation() {
-  const [location, setLocation] = useState<Location>({
-    city: '',
-    country: '',
+  const [state, setState] = useState<GeolocationState>({
+    city: null,
+    country: null,
     loading: true,
     error: null,
   });
+  const [showPermissionPopup, setShowPermissionPopup] = useState(false);
 
-  useEffect(() => {
+  const requestGeolocation = () => {
+    setState((prev) => ({ ...prev, loading: true, error: null }));
+
     if (!navigator.geolocation) {
-      setLocation((prev) => ({
+      setState((prev) => ({
         ...prev,
         loading: false,
         error: 'Geolocation is not supported by your browser',
@@ -35,14 +38,17 @@ export function useGeolocation() {
           );
           const data = await response.json();
 
-          setLocation({
-            city: data.city || '',
-            country: data.countryName || '',
+          setState({
+            city: data.city || null,
+            country: data.countryName || null,
             loading: false,
             error: null,
           });
+
+          // Save to localStorage to persist the permission
+          localStorage.setItem('locationPermission', 'granted');
         } catch (error) {
-          setLocation((prev) => ({
+          setState((prev) => ({
             ...prev,
             loading: false,
             error: 'Failed to fetch location details',
@@ -50,14 +56,29 @@ export function useGeolocation() {
         }
       },
       (error) => {
-        setLocation((prev) => ({
+        setState((prev) => ({
           ...prev,
           loading: false,
           error: error.message,
         }));
       }
     );
+  };
+
+  useEffect(() => {
+    const hasPermission = localStorage.getItem('locationPermission');
+
+    if (hasPermission === 'granted') {
+      requestGeolocation();
+    } else if (hasPermission === null) {
+      setShowPermissionPopup(true);
+    }
   }, []);
 
-  return location;
+  return {
+    ...state,
+    showPermissionPopup,
+    setShowPermissionPopup,
+    requestGeolocation,
+  };
 }
