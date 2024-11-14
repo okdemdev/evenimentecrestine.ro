@@ -1,5 +1,4 @@
 import { EventCardType } from '@/app/(root)/page';
-import { evenimente } from '@/app/(root)/page';
 
 export const getMonthNumber = (month: string): number => {
   const monthMap: { [key: string]: number } = {
@@ -28,20 +27,7 @@ export const sortEventsByDateAndLocation = (
   const currentDay = currentDate.getDate();
 
   return [...events].sort((a, b) => {
-    // First, prioritize events from today onwards
-    const monthA = getMonthNumber(a.month);
-    const monthB = getMonthNumber(b.month);
-    const dayA = parseInt(a.day);
-    const dayB = parseInt(b.day);
-
-    const isPassedA = monthA < currentMonth || (monthA === currentMonth && dayA < currentDay);
-    const isPassedB = monthB < currentMonth || (monthB === currentMonth && dayB < currentDay);
-
-    if (isPassedA !== isPassedB) {
-      return isPassedA ? 1 : -1;
-    }
-
-    // Then, sort by location match if userCity is available
+    // If we have a user city, prioritize events from that city
     if (userCity) {
       const aInCity = a.location.toLowerCase().includes(userCity.toLowerCase());
       const bInCity = b.location.toLowerCase().includes(userCity.toLowerCase());
@@ -51,12 +37,25 @@ export const sortEventsByDateAndLocation = (
       }
     }
 
-    // Sort by month
+    // Then sort by date
+    const monthA = getMonthNumber(a.month);
+    const monthB = getMonthNumber(b.month);
+    const dayA = parseInt(a.day);
+    const dayB = parseInt(b.day);
+
+    // Check if events are past or future relative to current date
+    const isPassedA = monthA < currentMonth || (monthA === currentMonth && dayA < currentDay);
+    const isPassedB = monthB < currentMonth || (monthB === currentMonth && dayB < currentDay);
+
+    if (isPassedA !== isPassedB) {
+      return isPassedA ? 1 : -1;
+    }
+
+    // If both are future or both are past, sort by date
     if (monthA !== monthB) {
       return monthA - monthB;
     }
 
-    // Finally sort by day
     return dayA - dayB;
   });
 };
@@ -70,10 +69,4 @@ export const groupEventsByDate = (events: EventCardType[]): Record<string, Event
     acc[dateKey].push(event);
     return acc;
   }, {});
-};
-
-export const getEventById = async (id: string): Promise<EventCardType | null> => {
-  // Simulate an API call with a delay
-  await new Promise((resolve) => setTimeout(resolve, 100));
-  return evenimente.find((event) => event._id === id) || null;
 };

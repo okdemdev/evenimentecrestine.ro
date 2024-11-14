@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Clock, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,8 @@ import { getMonthNumber, groupEventsByDate } from '@/utils/eventUtils';
 
 interface TimelineEventsProps {
   events: EventCardType[];
+  userCity?: string | null;
+  category: string;
 }
 
 const getMonthAbbrev = (month: string): string => {
@@ -40,20 +42,29 @@ const PriceTag = ({ price }: { price: string }) => {
   );
 };
 
-export default function TimelineEvents({ events }: TimelineEventsProps) {
-  // Sort events only by date (month and day)
-  const sortedEvents = [...events].sort((a, b) => {
-    const monthA = getMonthNumber(a.month);
-    const monthB = getMonthNumber(b.month);
+export default function TimelineEvents({ events = [], userCity, category }: TimelineEventsProps) {
+  const sortedEvents = useMemo(() => {
+    if (!events || events.length === 0) return [];
 
-    if (monthA !== monthB) {
-      return monthA - monthB;
-    }
+    return [...events].sort((a, b) => {
+      const monthA = getMonthNumber(a.month);
+      const monthB = getMonthNumber(b.month);
 
-    return parseInt(a.day) - parseInt(b.day);
-  });
+      if (monthA !== monthB) {
+        return monthA - monthB;
+      }
 
-  const groupedEvents = groupEventsByDate(sortedEvents);
+      return parseInt(a.day) - parseInt(b.day);
+    });
+  }, [events]);
+
+  const groupedEvents = useMemo(() => {
+    return groupEventsByDate(sortedEvents);
+  }, [sortedEvents]);
+
+  if (!events || events.length === 0) {
+    return <div className="mt-6 text-center text-gray-500">Nu există evenimente disponibile.</div>;
+  }
 
   return (
     <div className="mt-6">

@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { MapPin, X } from 'lucide-react';
 
@@ -13,34 +11,43 @@ export default function LocationPermissionPopup({
   onRequestLocation,
 }: LocationPermissionPopupProps) {
   return (
-    <div className="fixed inset-x-0 bottom-0 p-4 z-50">
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-4 border border-gray-200">
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-[#6a7bff]" />
-            <h3 className="font-semibold text-gray-900">Activează locația</h3>
+    <div className="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-50 px-4 py-6">
+      <div className="bg-white rounded-lg shadow-xl max-w-md w-full relative animate-in slide-in-from-bottom duration-300">
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        <div className="p-6">
+          <div className="w-12 h-12 bg-[#6a7bff]/10 rounded-full flex items-center justify-center mb-4">
+            <MapPin className="w-6 h-6 text-[#6a7bff]" />
           </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-500 transition-colors">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-        <p className="text-sm text-gray-600 mb-4">
-          Pentru a-ți arăta evenimente din apropierea ta, avem nevoie de permisiunea de a-ți accesa
-          locația.
-        </p>
-        <div className="flex justify-end gap-3">
-          <button
-            onClick={onClose}
-            className="px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 transition-colors"
-          >
-            Mai târziu
-          </button>
-          <button
-            onClick={onRequestLocation}
-            className="px-4 py-1.5 text-sm bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white rounded-md transition-colors"
-          >
-            Activează locația
-          </button>
+
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Permiteți accesul la locație?
+          </h3>
+
+          <p className="text-gray-600 mb-6">
+            Pentru a vă arăta evenimente relevante din zona dvs., avem nevoie de permisiunea de a
+            accesa locația dvs.
+          </p>
+
+          <div className="flex gap-3">
+            <button
+              onClick={onRequestLocation}
+              className="flex-1 bg-[#6a7bff] text-white px-4 py-2 rounded-lg hover:bg-[#6a7bff]/90 transition-colors"
+            >
+              Permite accesul
+            </button>
+            <button
+              onClick={onClose}
+              className="flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              Nu acum
+            </button>
+          </div>
         </div>
       </div>
     </div>
