@@ -49,10 +49,9 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
     <>
       <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
         <CategoryFilter activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
-        <CityFilter selectedCity={selectedCity} onCityChange={setSelectedCity} />
       </div>
-
-      <div className="mt-6 md:mt-8 mb-3 md:mb-4">
+      <CityFilter selectedCity={selectedCity} onCityChange={setSelectedCity} />
+      <div className="mt-4 md:mt-4 mb-3 md:mb-4">
         <div className="flex justify-between items-center">
           <h2 className="text-base md:text-xl font-bold text-[#333]">Evenimente disponibile</h2>
 
