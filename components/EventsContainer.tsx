@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import CategoryFilter from './CategoryFilter';
 import EventCard from './EventCard';
 import TimelineEvents from './TimelineEvents';
+import CityFilter from './CityFilter';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { sortEventsByDateAndLocation } from '@/utils/eventUtils';
 import type { EventCardType } from '@/app/(root)/page';
@@ -15,34 +16,45 @@ interface EventsContainerProps {
 
 export default function EventsContainer({ evenimente }: EventsContainerProps) {
   const [activeCategory, setActiveCategory] = useState('all');
+  const [selectedCity, setSelectedCity] = useState('');
   const { city, country, loading, error } = useGeolocation();
 
   const filteredAndSortedEvents = useMemo(() => {
     // First filter by category
-    const filteredEvents =
+    let filteredEvents =
       activeCategory === 'all'
         ? evenimente
         : evenimente.filter((event) => event.category === activeCategory);
 
-    // Then sort by location and date
-    return sortEventsByDateAndLocation(filteredEvents, city);
-  }, [evenimente, activeCategory, city]);
+    // Then filter by selected city if one is chosen
+    if (selectedCity) {
+      filteredEvents = filteredEvents.filter((event) =>
+        event.location.toLowerCase().includes(selectedCity.toLowerCase())
+      );
+    }
+
+    // Finally sort by location and date
+    return sortEventsByDateAndLocation(filteredEvents, selectedCity || city);
+  }, [evenimente, activeCategory, selectedCity, city]);
 
   const locationText = loading
     ? 'Se încarcă locația...'
-    : error || !city
+    : error || (!city && !selectedCity)
     ? 'Evenimente ordonate după dată'
-    : `( ${city}, ${country} )`;
+    : selectedCity
+    ? `Evenimente din ${selectedCity}`
+    : `Evenimente din ${city}, ${country}`;
 
   return (
     <>
-      <CategoryFilter activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
+      <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+        <CategoryFilter activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
+        <CityFilter selectedCity={selectedCity} onCityChange={setSelectedCity} />
+      </div>
 
       <div className="mt-6 md:mt-8 mb-3 md:mb-4">
         <div className="flex justify-between items-center">
-          <h2 className="text-base md:text-xl font-bold text-[#333]">
-            {error || !city ? 'Evenimente disponibile' : 'Evenimente din apropierea ta'}
-          </h2>
+          <h2 className="text-base md:text-xl font-bold text-[#333]">Evenimente disponibile</h2>
 
           <button className="text-xs md:text-sm text-[#6a7bff] font-semibold flex items-center gap-1 hover:gap-2 transition-all">
             Vezi toate

@@ -51,11 +51,12 @@ export const sortEventsByDateAndLocation = (
       }
     }
 
-    // Finally sort by date
+    // Sort by month
     if (monthA !== monthB) {
       return monthA - monthB;
     }
 
+    // Finally sort by day
     return dayA - dayB;
   });
 };
