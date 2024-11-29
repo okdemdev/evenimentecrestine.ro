@@ -2,9 +2,15 @@
 
 import { Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useEffect, useState } from 'react';
 
 export function ShareButton() {
-  const shareUrl = window.location.href;
+  const [shareUrl, setShareUrl] = useState('');
+
+  useEffect(() => {
+    // Set the URL only after component mounts (client-side)
+    setShareUrl(window.location.href);
+  }, []);
 
   const shareOnWhatsApp = () => {
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareUrl)}`;
