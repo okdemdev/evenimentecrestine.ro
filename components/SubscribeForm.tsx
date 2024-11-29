@@ -44,7 +44,7 @@ export function SubscribeForm() {
         placeholder="Email-ul tău"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="flex-1"
+        className="flex-1 px-4 py-2 h-10"
         required
       />
       <Button

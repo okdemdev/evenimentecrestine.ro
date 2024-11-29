@@ -125,6 +125,10 @@ export default function TimelineEvents({ events = [], userCity, category }: Time
                                   {extractCity(event.location)}
                                 </span>
                               </div>
+
+                              <p className="text-sm text-gray-600 line-clamp-2 mt-1">
+                                {event.about}
+                              </p>
                             </div>
 
                             <div className="flex items-center justify-between mt-3 md:mt-5 pt-3 md:pt-5 border-t border-gray-100">

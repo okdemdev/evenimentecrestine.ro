@@ -19,10 +19,10 @@ interface CityFilterProps {
 
 export default function CityFilter({ selectedCity, onCityChange, userCity }: CityFilterProps) {
   useEffect(() => {
-    if (userCity && romanianCities.includes(userCity) && !selectedCity) {
+    if (userCity && !selectedCity && romanianCities.includes(userCity)) {
       onCityChange(userCity);
     }
-  }, [userCity, onCityChange, selectedCity]);
+  }, [userCity]);
 
   return (
     <div className="relative">
