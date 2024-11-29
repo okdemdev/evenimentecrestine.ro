@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverActions: true,
-  },
-  env: {
-    MONGODB_URI: process.env.MONGODB_URI,
+  images: {
+    domains: [
+      'lh3.googleusercontent.com',
+      'images.unsplash.com',
+      'www.newsnetcrestin.ro',
+      'newsnetcrestin.ro', // Added without www. just in case
+    ],
   },
 };
 

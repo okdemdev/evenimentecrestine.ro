@@ -96,19 +96,17 @@ export default function TimelineEvents({ events = [], userCity, category }: Time
 
                     <div className="ml-16 md:ml-32 max-w-full md:max-w-2xl transform group-hover:-translate-y-1 transition-all duration-300">
                       <div className="bg-white rounded-lg border border-gray-100 overflow-hidden group-hover:shadow-lg group-hover:border-[#6a7bff]/10 transition-transform hover:scale-[1.02] duration-300 p-4">
-                        <div className="flex flex-col md:flex-row">
-                          <div className="relative w-full md:w-48 lg:w-56">
-                            <div className="relative" style={{ paddingBottom: '56.25%' }}>
-                              <img
-                                src={event.image}
-                                alt={event.title}
-                                className="absolute inset-0 w-full h-full object-cover rounded-lg"
-                                loading="lazy"
-                              />
-                            </div>
+                        <div className="flex flex-col md:flex-row gap-4">
+                          <div className="relative w-full md:w-48 lg:w-56 aspect-video md:aspect-square">
+                            <img
+                              src={event.image}
+                              alt={event.title}
+                              className="w-full h-full object-cover rounded-lg"
+                              loading="lazy"
+                            />
                           </div>
 
-                          <div className="flex-1 p-3 md:p-4">
+                          <div className="flex-1 space-y-2">
                             <div className="flex items-center gap-3 text-sm text-gray-500 mb-2">
                               <div className="flex items-center gap-1 mt-2">
                                 <Clock className="w-4 h-4 shrink-0" />
@@ -127,18 +125,21 @@ export default function TimelineEvents({ events = [], userCity, category }: Time
 
                             <p className="text-gray-600 text-sm mb-3 line-clamp-2">{event.about}</p>
 
-                            <div className="flex items-center justify-between gap-2">
-                              <div className="flex items-center gap-2">
+                            <div className="flex flex-col gap-3">
+                              <div className="flex items-center justify-between gap-2">
                                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#6a7bff]/5 text-[#6a7bff]">
                                   {event.category}
                                 </span>
                                 <PriceTag price={event.price} />
                               </div>
-                              <Link href={`/events/${event._id}`}>
-                                <Button className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white h-7 text-xs px-2.5">
-                                  Vezi Detalii
-                                </Button>
-                              </Link>
+
+                              <div className="flex justify-end">
+                                <Link href={`/events/${event._id}`}>
+                                  <Button className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white h-7 text-xs px-2.5">
+                                    Vezi Detalii
+                                  </Button>
+                                </Link>
+                              </div>
                             </div>
                           </div>
                         </div>

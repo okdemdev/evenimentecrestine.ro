@@ -16,9 +16,11 @@ const PriceTag = ({ price }: { price: string }) => {
       </span>
     );
   }
+  const formattedPrice = price.toLowerCase().replace('lei', '').replace('ron', '').trim();
+
   return (
-    <span className="text-[#6a7bff] bg-[#6a7bff]/10 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium">
-      {price} RON
+    <span className="text-[#6a7bff] bg-[#6a7bff]/10 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium whitespace-nowrap">
+      {formattedPrice} RON
     </span>
   );
 };
