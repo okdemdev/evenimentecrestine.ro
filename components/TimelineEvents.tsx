@@ -98,11 +98,11 @@ export default function TimelineEvents({ events = [], userCity, category }: Time
                       <div className="bg-white rounded-lg border border-gray-100 overflow-hidden group-hover:shadow-lg group-hover:border-[#6a7bff]/10 transition-transform hover:scale-[1.02] duration-300 p-4">
                         <div className="flex flex-col md:flex-row">
                           <div className="relative w-full md:w-48 lg:w-56">
-                            <div className="aspect-[4/3] md:aspect-auto md:h-full">
+                            <div className="relative" style={{ paddingBottom: '56.25%' }}>
                               <img
                                 src={event.image}
                                 alt={event.title}
-                                className="w-full h-full object-cover rounded-lg"
+                                className="absolute inset-0 w-full h-full object-cover rounded-lg"
                                 loading="lazy"
                               />
                             </div>

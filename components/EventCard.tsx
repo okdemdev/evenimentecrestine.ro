@@ -26,11 +26,11 @@ const PriceTag = ({ price }: { price: string }) => {
 export default function EventCard({ event }: EventCardProps) {
   return (
     <Card className="w-[240px] md:w-[300px] shrink-0 transition-transform hover:scale-[1.02]">
-      <div className="relative aspect-[4/3] p-1.5 md:p-2">
+      <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
         <img
           src={event.image}
           alt={event.title}
-          className="object-cover w-full h-full rounded-lg md:rounded-xl"
+          className="absolute inset-0 w-full h-full object-cover rounded-t-lg"
           loading="lazy"
         />
       </div>
