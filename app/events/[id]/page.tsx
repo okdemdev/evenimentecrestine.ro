@@ -44,9 +44,9 @@ export default async function EventPage({ params }: { params: { id: string } }) 
         </div>
 
         {/* Image Container - Mobile */}
-        <div className="w-full">
-          <div className="relative bg-gray-50">
-            <div className="relative w-full h-[calc(100vw*0.75)]">
+        <div className="px-2">
+          <div className="relative bg-gray-50 rounded-2xl overflow-hidden">
+            <div className="relative w-full h-[calc(100vw-16px)]">
               <Image
                 src={event.image}
                 alt={event.title}
@@ -57,15 +57,14 @@ export default async function EventPage({ params }: { params: { id: string } }) 
                 quality={100}
               />
             </div>
-            {/* Gradient overlay for smooth transition */}
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-50 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-50 to-transparent" />
           </div>
         </div>
 
         {/* Content for mobile/tablet */}
-        <div className="px-4 -mt-10 relative z-10">
-          <div className="bg-white rounded-t-[32px] shadow-lg">
-            <div className="p-6 space-y-6">
+        <div className="px-2 -mt-6 relative z-10">
+          <div className="bg-white rounded-t-2xl shadow-sm">
+            <div className="p-4 space-y-6">
               {/* Header */}
               <div className="flex flex-col gap-4">
                 <h1 className="text-2xl font-bold text-gray-900">{event.title}</h1>
@@ -158,8 +157,8 @@ export default async function EventPage({ params }: { params: { id: string } }) 
       {/* Desktop Layout */}
       <div className="hidden lg:grid grid-cols-2 gap-8 max-w-7xl mx-auto p-4 lg:p-8">
         {/* Left side - Image */}
-        <div className="bg-gray-50 rounded-2xl overflow-hidden">
-          <div className="relative w-full h-[calc(100vh-8rem)]">
+        <div className="bg-gray-50 rounded-[24px] overflow-hidden h-fit">
+          <div className="relative w-full" style={{ paddingBottom: '100%' }}>
             <Image
               src={event.image}
               alt={event.title}
@@ -173,7 +172,7 @@ export default async function EventPage({ params }: { params: { id: string } }) 
         </div>
 
         {/* Right side - Content */}
-        <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4 lg:p-8">
+        <div className="bg-white rounded-[24px] shadow-sm border border-gray-100 p-4 lg:p-8">
           {/* Back Button */}
           <div className="mb-6">
             <Link href="/">
