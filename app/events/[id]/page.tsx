@@ -31,9 +31,15 @@ export default async function EventPage({ params }: { params: { id: string } }) 
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section with Image */}
-      <div className="relative h-[40vh] md:h-[50vh] lg:h-[60vh] w-full">
-        <Image src={event.image} alt={event.title} fill className="object-cover" priority />
+      {/* Hero Section with Image - Updated height and object-fit */}
+      <div className="relative h-[60vh] md:h-[70vh] lg:h-[80vh] w-full">
+        <Image
+          src={event.image}
+          alt={event.title}
+          fill
+          className="object-contain bg-black" // Changed to contain and added black background
+          priority
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
         {/* Back Button */}
@@ -56,10 +62,6 @@ export default async function EventPage({ params }: { params: { id: string } }) 
                 <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
                   {event.title}
                 </h1>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Users2 className="w-4 h-4" />
-                  <span>Organizator: {event.organizer}</span>
-                </div>
               </div>
               <div className="flex items-center gap-3">
                 <PriceTag />
@@ -67,8 +69,8 @@ export default async function EventPage({ params }: { params: { id: string } }) 
               </div>
             </div>
 
-            {/* Event Details Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {/* Event Details Grid - Updated to include organizer */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
                 <div className="flex-shrink-0">
                   <CalendarIcon className="w-6 h-6 text-blue-600" />
@@ -98,6 +100,16 @@ export default async function EventPage({ params }: { params: { id: string } }) 
                 <div>
                   <p className="text-sm font-medium text-gray-600">Locație</p>
                   <p className="text-base font-semibold text-gray-900">{event.location}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
+                <div className="flex-shrink-0">
+                  <Users2 className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Organizator</p>
+                  <p className="text-base font-semibold text-gray-900">{event.organizer}</p>
                 </div>
               </div>
             </div>
