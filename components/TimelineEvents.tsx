@@ -148,6 +148,36 @@ export default function TimelineEvents({ events = [], userCity, category }: Time
               </div>
             );
           })}
+
+          {/* End of Timeline Indicator */}
+          <div className="relative">
+            <div className="absolute left-[12px] md:left-[52px] w-4 h-4 rounded-full bg-gradient-to-r from-[#6a7bff] to-purple-500" />
+            <div className="ml-16 md:ml-32 bg-white rounded-xl p-4 md:p-8 text-center border border-gray-100 shadow-sm">
+              <div className="max-w-md mx-auto space-y-4">
+                <div className="space-y-2">
+                  <p className="text-gray-900 font-semibold">
+                    Nu mai sunt evenimente disponibile pentru moment.
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Adaugă email-ul tău pentru a primi notificări când evenimente noi vor apărea!
+                  </p>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-2 max-w-sm mx-auto">
+                  <input
+                    type="email"
+                    placeholder="Email-ul tău"
+                    className="flex-1 px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6a7bff]/20 focus:border-[#6a7bff] text-sm"
+                  />
+                  <Button className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white text-sm">
+                    Abonează-te
+                  </Button>
+                </div>
+                <p className="text-xs text-gray-500 px-2">
+                  Vei primi doar notificări despre evenimente noi. Poți să te dezabonezi oricând.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
