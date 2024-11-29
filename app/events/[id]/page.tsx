@@ -33,14 +33,15 @@ export default async function EventPage({ params }: { params: { id: string } }) 
     <div className="min-h-screen bg-gray-50">
       {/* Mobile/Tablet Layout */}
       <div className="lg:hidden relative">
-        {/* Back Button for mobile/tablet */}
-        <div className="fixed top-4 left-4 z-20">
+        {/* Navigation Buttons */}
+        <div className="fixed top-4 left-4 right-4 z-20 flex justify-between items-center">
           <Link href="/">
             <Button variant="outline" className="bg-white/90 hover:bg-white">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Înapoi
             </Button>
           </Link>
+          <ShareButton />
         </div>
 
         {/* Image Container - Mobile */}
@@ -70,7 +71,6 @@ export default async function EventPage({ params }: { params: { id: string } }) 
                 <h1 className="text-2xl font-bold text-gray-900">{event.title}</h1>
                 <div className="flex items-center gap-3">
                   <PriceTag />
-                  <ShareButton />
                 </div>
               </div>
 
@@ -173,24 +173,24 @@ export default async function EventPage({ params }: { params: { id: string } }) 
 
         {/* Right side - Content */}
         <div className="bg-white rounded-[24px] shadow-sm border border-gray-100 p-4 lg:p-8 flex flex-col h-[calc(100vh-4rem)]">
-          {/* Back Button */}
-          <div className="mb-6">
+          {/* Navigation Buttons */}
+          <div className="flex justify-between items-center mb-6">
             <Link href="/">
               <Button variant="outline" className="bg-white hover:bg-gray-50">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Înapoi
               </Button>
             </Link>
+            <ShareButton />
           </div>
 
-          {/* Scrollable content area */}
-          <div className="flex-1 overflow-y-auto pr-2">
+          {/* Scrollable content area with styled scrollbar */}
+          <div className="flex-1 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400 scrollbar-thumb-rounded-full">
             {/* Header */}
             <div className="flex flex-col gap-4 mb-8">
               <h1 className="text-3xl font-bold text-gray-900">{event.title}</h1>
               <div className="flex items-center gap-3">
                 <PriceTag />
-                <ShareButton />
               </div>
             </div>
 
