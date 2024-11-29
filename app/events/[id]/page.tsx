@@ -59,8 +59,8 @@ export default async function EventPage({ params }: { params: { id: string } }) 
         </div>
 
         {/* Content for mobile/tablet */}
-        <div className="px-4 -mt-6 relative z-10">
-          <div className="bg-white rounded-xl shadow-lg">
+        <div className="px-4 -mt-16 relative z-10">
+          <div className="bg-white rounded-t-2xl shadow-lg">
             <div className="p-4 sm:p-6 space-y-6">
               {/* Header */}
               <div className="flex flex-col gap-4">
