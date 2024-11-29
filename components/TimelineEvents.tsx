@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { IEvent } from '@/types';
 import { getMonthNumber, groupEventsByDate, extractCity } from '@/utils/eventUtils';
+import { SubscribeForm } from '@/components/SubscribeForm';
 
 interface TimelineEventsProps {
   events: IEvent[];
@@ -162,16 +163,7 @@ export default function TimelineEvents({ events = [], userCity, category }: Time
                     Adaugă email-ul tău pentru a primi notificări când evenimente noi vor apărea!
                   </p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-2 max-w-sm mx-auto">
-                  <input
-                    type="email"
-                    placeholder="Email-ul tău"
-                    className="flex-1 px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6a7bff]/20 focus:border-[#6a7bff] text-sm"
-                  />
-                  <Button className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white text-sm">
-                    Abonează-te
-                  </Button>
-                </div>
+                <SubscribeForm />
                 <p className="text-xs text-gray-500 px-2">
                   Vei primi doar notificări despre evenimente noi. Poți să te dezabonezi oricând.
                 </p>
