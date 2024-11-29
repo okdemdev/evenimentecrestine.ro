@@ -27,7 +27,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
       );
     }
     return (
-      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#6a7bff]/10 text-[#6a7bff]">
         {event.price}
       </span>
     );
@@ -80,7 +80,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
                   {event.title}
                 </h1>
                 <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#6a7bff]/10 text-[#6a7bff]">
                     {event.category}
                   </span>
                   <PriceTag />
@@ -92,7 +92,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
                     <div className="flex-shrink-0">
-                      <CalendarIcon className="w-6 h-6 text-blue-600" />
+                      <CalendarIcon className="w-6 h-6 text-[#6a7bff]" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-600">Data</p>
@@ -104,7 +104,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
 
                   <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
                     <div className="flex-shrink-0">
-                      <Clock3Icon className="w-6 h-6 text-blue-600" />
+                      <Clock3Icon className="w-6 h-6 text-[#6a7bff]" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-600">Ora</p>
@@ -119,19 +119,19 @@ export default function EventPageClient({ event }: EventPageClientProps) {
                     className="flex items-center gap-3 p-4 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer group transition-colors"
                   >
                     <div className="flex-shrink-0">
-                      <LocateIcon className="w-6 h-6 text-blue-600" />
+                      <LocateIcon className="w-6 h-6 text-[#6a7bff]" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-600">Locație</p>
                       <p className="text-base font-semibold text-gray-900">{event.location}</p>
-                      <span className="text-sm text-blue-600 group-hover:text-blue-700">
+                      <span className="text-sm text-[#6a7bff] group-hover:text-[#6a7bff]/90">
                         Deschide în Google Maps
                       </span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
-                    <Avatar className="h-12 w-12 bg-blue-100 text-blue-600">
+                    <Avatar className="h-12 w-12 bg-[#6a7bff]/10 text-[#6a7bff]">
                       <AvatarFallback>{event.organizer.slice(0, 2).toUpperCase()}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
@@ -192,7 +192,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
                 {event.title}
               </h1>
               <div className="flex items-center justify-between">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#6a7bff]/10 text-[#6a7bff]">
                   {event.category}
                 </span>
                 <PriceTag />
@@ -204,7 +204,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
                   <div className="flex-shrink-0">
-                    <CalendarIcon className="w-6 h-6 text-blue-600" />
+                    <CalendarIcon className="w-6 h-6 text-[#6a7bff]" />
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-600">Data</p>
@@ -216,7 +216,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
 
                 <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
                   <div className="flex-shrink-0">
-                    <Clock3Icon className="w-6 h-6 text-blue-600" />
+                    <Clock3Icon className="w-6 h-6 text-[#6a7bff]" />
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-600">Ora</p>
@@ -231,19 +231,19 @@ export default function EventPageClient({ event }: EventPageClientProps) {
                   className="flex items-center gap-3 p-4 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer group transition-colors"
                 >
                   <div className="flex-shrink-0">
-                    <LocateIcon className="w-6 h-6 text-blue-600" />
+                    <LocateIcon className="w-6 h-6 text-[#6a7bff]" />
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-600">Locație</p>
                     <p className="text-base font-semibold text-gray-900">{event.location}</p>
-                    <span className="text-sm text-blue-600 group-hover:text-blue-700">
+                    <span className="text-sm text-[#6a7bff] group-hover:text-[#6a7bff]/90">
                       Open in Google Maps
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
-                  <Avatar className="h-12 w-12 bg-blue-100 text-blue-600">
+                  <Avatar className="h-12 w-12 bg-[#6a7bff]/10 text-[#6a7bff]">
                     <AvatarFallback>{event.organizer.slice(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
