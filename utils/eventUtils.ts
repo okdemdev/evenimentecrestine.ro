@@ -1,19 +1,4 @@
-import { EventCardType } from '@/app/(root)/page';
-import { evenimente } from '@/app/(root)/page';
-
-export type Event = {
-  _id: string;
-  title: string;
-  hour: string;
-  month: string;
-  day: string;
-  location: string;
-  category: string;
-  about: string;
-  image: string;
-  organizer: string;
-  price: string;
-};
+import { IEvent } from '@/types';
 
 export const getMonthNumber = (month: string): number => {
   const monthMap: { [key: string]: number } = {
@@ -34,15 +19,14 @@ export const getMonthNumber = (month: string): number => {
 };
 
 export const sortEventsByDateAndLocation = (
-  events: EventCardType[],
+  events: IEvent[],
   userCity: string | null
-): EventCardType[] => {
+): IEvent[] => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1;
   const currentDay = currentDate.getDate();
 
   return [...events].sort((a, b) => {
-    // If we have a user city, prioritize events from that city
     if (userCity) {
       const aInCity = a.location.toLowerCase().includes(userCity.toLowerCase());
       const bInCity = b.location.toLowerCase().includes(userCity.toLowerCase());
@@ -52,13 +36,11 @@ export const sortEventsByDateAndLocation = (
       }
     }
 
-    // Then sort by date
     const monthA = getMonthNumber(a.month);
     const monthB = getMonthNumber(b.month);
     const dayA = parseInt(a.day);
     const dayB = parseInt(b.day);
 
-    // Check if events are past or future relative to current date
     const isPassedA = monthA < currentMonth || (monthA === currentMonth && dayA < currentDay);
     const isPassedB = monthB < currentMonth || (monthB === currentMonth && dayB < currentDay);
 
@@ -66,7 +48,6 @@ export const sortEventsByDateAndLocation = (
       return isPassedA ? 1 : -1;
     }
 
-    // If both are future or both are past, sort by date
     if (monthA !== monthB) {
       return monthA - monthB;
     }
@@ -75,8 +56,8 @@ export const sortEventsByDateAndLocation = (
   });
 };
 
-export const groupEventsByDate = (events: EventCardType[]): Record<string, EventCardType[]> => {
-  return events.reduce((acc: Record<string, EventCardType[]>, event) => {
+export const groupEventsByDate = (events: IEvent[]): Record<string, IEvent[]> => {
+  return events.reduce((acc: Record<string, IEvent[]>, event) => {
     const dateKey = `${event.month}-${event.day}`;
     if (!acc[dateKey]) {
       acc[dateKey] = [];
@@ -84,9 +65,4 @@ export const groupEventsByDate = (events: EventCardType[]): Record<string, Event
     acc[dateKey].push(event);
     return acc;
   }, {});
-};
-
-export const getEventById = async (id: string): Promise<Event | null> => {
-  const event = evenimente.find((e) => e._id === id);
-  return event || null;
 };

@@ -1,12 +1,12 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, Calendar, MapPin } from 'lucide-react';
-import { EventCardType } from '@/app';
+import { IEvent } from '@/types';
 import { useRouter } from 'next/navigation';
 
 interface SearchFormProps {
   query?: string;
-  evenimente: EventCardType[];
+  evenimente: IEvent[];
 }
 
 const SearchForm = ({ query, evenimente }: SearchFormProps) => {

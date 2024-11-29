@@ -1,11 +1,12 @@
 import { notFound } from 'next/navigation';
-import { getEventById } from '@/utils/eventUtils';
+import { getEventById } from '@/app/actions/events';
 import { ArrowLeft, CalendarIcon, Clock3Icon, LocateIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ShareButton } from '@/components/ShareButton';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ParticipateButton } from '@/components/ParticipateButton';
 
 export default async function EventPage({ params }: { params: { id: string } }) {
   const event = await getEventById(params.id);
@@ -93,9 +94,7 @@ export default async function EventPage({ params }: { params: { id: string } }) 
             </div>
 
             <div className="mt-8 pt-8 border-t flex justify-between items-center">
-              <Button className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white">
-                Register for Event
-              </Button>
+              <ParticipateButton />
               <ShareButton />
             </div>
           </CardContent>

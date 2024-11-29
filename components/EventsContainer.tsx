@@ -9,10 +9,10 @@ import CityFilter from './CityFilter';
 import LocationPermissionPopup from './LocationPermissionPopup';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { sortEventsByDateAndLocation } from '@/utils/eventUtils';
-import type { EventCardType } from '@/app/(root)/page';
+import { IEvent } from '@/types';
 
 interface EventsContainerProps {
-  evenimente: EventCardType[];
+  evenimente: IEvent[];
 }
 
 export default function EventsContainer({ evenimente }: EventsContainerProps) {

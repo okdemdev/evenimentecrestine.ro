@@ -2,11 +2,11 @@ import React, { useMemo } from 'react';
 import { Clock, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { EventCardType } from '@/app/(root)/page';
+import { IEvent } from '@/types';
 import { getMonthNumber, groupEventsByDate } from '@/utils/eventUtils';
 
 interface TimelineEventsProps {
-  events: EventCardType[];
+  events: IEvent[];
   userCity?: string | null;
   category: string;
 }

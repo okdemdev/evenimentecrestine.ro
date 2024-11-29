@@ -2,18 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { CalendarIcon, Clock3Icon, LocateIcon } from 'lucide-react';
 import Link from 'next/link';
+import { IEvent } from '@/types';
 
-interface EventCardType {
-  _id: string;
-  title: string;
-  hour: string;
-  month: string;
-  day: string;
-  location: string;
-  category: string;
-  about: string;
-  image: string;
-  price: string;
+interface EventCardProps {
+  event: IEvent;
 }
 
 const PriceTag = ({ price }: { price: string }) => {
@@ -31,7 +23,7 @@ const PriceTag = ({ price }: { price: string }) => {
   );
 };
 
-export default function EventCard({ event }: { event: EventCardType }) {
+export default function EventCard({ event }: EventCardProps) {
   return (
     <Card className="w-[240px] md:w-[300px] shrink-0 transition-transform hover:scale-[1.02]">
       <div className="relative aspect-[4/3] p-1.5 md:p-2">
