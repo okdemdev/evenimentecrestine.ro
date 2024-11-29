@@ -2,105 +2,147 @@
 
 import { useState, useEffect } from 'react';
 
-interface GeolocationState {
-  city: string | null;
-  country: string | null;
-  loading: boolean;
-  error: string | null;
-}
-
 export function useGeolocation() {
-  const [state, setState] = useState<GeolocationState>({
-    city: null,
-    country: null,
-    loading: false,
-    error: null,
-  });
+  const [city, setCity] = useState<string | null>(null);
+  const [country, setCountry] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [showPermissionPopup, setShowPermissionPopup] = useState(false);
 
-  const getLocation = async () => {
-    setState((prev) => ({ ...prev, loading: true, error: null }));
-
-    if (!navigator.geolocation) {
-      setState((prev) => ({
-        ...prev,
-        loading: false,
-        error: 'Geolocation is not supported by your browser',
-      }));
-      return;
-    }
+  const requestGeolocation = async () => {
+    setLoading(true);
+    setError(null);
 
     try {
+      if (typeof window !== 'undefined' && window.location.protocol !== 'https:') {
+        console.warn('Geolocation requires HTTPS');
+      }
+
+      if (!navigator.geolocation) {
+        throw new Error('Geolocation is not supported by your browser');
+      }
+
+      console.log('Requesting geolocation...');
+
       const position = await new Promise<GeolocationPosition>((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
-          (pos) => resolve(pos),
-          (err) => reject(err),
+          (pos) => {
+            console.log('Got position:', {
+              latitude: pos.coords.latitude,
+              longitude: pos.coords.longitude,
+              accuracy: pos.coords.accuracy,
+            });
+            resolve(pos);
+          },
+          (err: GeolocationPositionError) => {
+            console.error('Position error code:', err.code);
+            console.error('Position error message:', err.message);
+
+            let errorMessage = 'Unknown error occurred';
+            switch (err.code) {
+              case err.PERMISSION_DENIED:
+                errorMessage =
+                  'Location permission denied. Please enable location services in your browser settings.';
+                break;
+              case err.POSITION_UNAVAILABLE:
+                errorMessage = 'Location information unavailable. Please try again.';
+                break;
+              case err.TIMEOUT:
+                errorMessage =
+                  'Location request timed out. Please check your connection and try again.';
+                break;
+            }
+            reject(new Error(errorMessage));
+          },
           {
-            enableHighAccuracy: true,
+            enableHighAccuracy: false,
             timeout: 10000,
-            maximumAge: 0,
+            maximumAge: 300000,
           }
         );
       });
 
-      try {
-        const response = await fetch(
-          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=ro`
-        );
-        const data = await response.json();
+      const { latitude, longitude } = position.coords;
 
-        setState({
-          city: data.city || null,
-          country: data.countryName || null,
-          loading: false,
-          error: null,
-        });
+      console.log('Fetching location data...');
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=ro`
+      );
 
-        localStorage.setItem('locationPermission', 'granted');
-        setShowPermissionPopup(false);
-      } catch (error) {
-        setState((prev) => ({
-          ...prev,
-          loading: false,
-          error: 'Failed to fetch location details',
-        }));
+      if (!response.ok) {
+        throw new Error('Failed to fetch location data');
       }
-    } catch (error: any) {
-      setState((prev) => ({
-        ...prev,
-        loading: false,
-        error: error.message || 'Failed to get location',
-      }));
 
-      if (error.code === 1) {
-        // PERMISSION_DENIED
-        localStorage.removeItem('locationPermission');
+      const data = await response.json();
+      console.log('Location data:', data);
+
+      const cityName =
+        data.address.city ||
+        data.address.town ||
+        data.address.village ||
+        data.address.suburb ||
+        data.address.municipality;
+
+      console.log('Setting city:', cityName);
+      setCity(cityName || null);
+      setCountry(data.address.country || null);
+      setShowPermissionPopup(false);
+    } catch (err) {
+      console.error('Full error:', err);
+
+      if (err instanceof Error) {
+        console.error('Error message:', err.message);
+        setError(err.message);
+
+        if (err.message.includes('permission') || err.message.includes('denied')) {
+          setShowPermissionPopup(true);
+        }
+      } else {
+        setError('An unexpected error occurred');
       }
+    } finally {
+      setLoading(false);
     }
-  };
-
-  const requestGeolocation = () => {
-    // This will trigger the browser's native permission prompt
-    getLocation();
   };
 
   useEffect(() => {
-    const hasPermission = localStorage.getItem('locationPermission');
+    const checkAndRequestPermission = async () => {
+      try {
+        if (typeof window !== 'undefined' && navigator.permissions) {
+          const result = await navigator.permissions.query({
+            name: 'geolocation' as PermissionName,
+          });
+          console.log('Initial permission status:', result.state);
 
-    if (hasPermission === 'granted') {
-      getLocation();
-    } else {
-      // Only show the custom popup if we haven't asked for permission before
-      const hasAskedBefore = localStorage.getItem('locationAsked');
-      if (!hasAskedBefore && !state.city && !state.error) {
+          if (result.state === 'prompt') {
+            setShowPermissionPopup(true);
+          } else if (result.state === 'granted') {
+            await requestGeolocation();
+          } else if (result.state === 'denied') {
+            setShowPermissionPopup(true);
+          }
+
+          result.addEventListener('change', () => {
+            console.log('Permission status changed:', result.state);
+            if (result.state === 'granted') {
+              requestGeolocation();
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Permission check error:', error);
         setShowPermissionPopup(true);
-        localStorage.setItem('locationAsked', 'true');
       }
-    }
+    };
+
+    checkAndRequestPermission();
   }, []);
 
   return {
-    ...state,
+    city,
+    country,
+    loading,
+    error,
     showPermissionPopup,
     setShowPermissionPopup,
     requestGeolocation,
