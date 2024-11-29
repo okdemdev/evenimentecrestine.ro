@@ -5,11 +5,13 @@ import { Button } from '@/components/ui/button';
 import { IEvent } from '@/types';
 import { getMonthNumber, groupEventsByDate, extractCity } from '@/utils/eventUtils';
 import { SubscribeForm } from '@/components/SubscribeForm';
+import { TimelineEventSkeleton } from '@/components/skeletons/TimelineEventSkeleton';
 
 interface TimelineEventsProps {
   events: IEvent[];
   userCity?: string | null;
   category: string;
+  loading: boolean;
 }
 
 const getMonthAbbrev = (month: string): string => {
@@ -43,7 +45,22 @@ const PriceTag = ({ price }: { price: string }) => {
   );
 };
 
-export default function TimelineEvents({ events = [], userCity, category }: TimelineEventsProps) {
+export default function TimelineEvents({
+  events = [],
+  userCity,
+  category,
+  loading,
+}: TimelineEventsProps) {
+  if (loading) {
+    return (
+      <div className="space-y-8">
+        {[1, 2, 3].map((i) => (
+          <TimelineEventSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
   const sortedEvents = useMemo(() => {
     if (!events || events.length === 0) return [];
 

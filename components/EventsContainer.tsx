@@ -10,6 +10,7 @@ import LocationPermissionPopup from './LocationPermissionPopup';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { sortEventsByDateAndLocation } from '@/utils/eventUtils';
 import { IEvent } from '@/types';
+import { EventCardSkeleton } from '@/components/skeletons/EventCardSkeleton';
 
 interface EventsContainerProps {
   evenimente: IEvent[];
@@ -78,6 +79,16 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
     return 'Evenimente din toate orașele';
   };
 
+  if (loading) {
+    return (
+      <div className="flex gap-3 md:gap-4 overflow-x-auto pb-3 md:pb-4">
+        {[1, 2, 3].map((i) => (
+          <EventCardSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="flex flex-col gap-4">
@@ -123,6 +134,7 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
         events={filteredByCategory}
         userCity={selectedCity || city}
         category={activeCategory}
+        loading={loading}
       />
 
       {showPermissionPopup && (

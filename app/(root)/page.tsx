@@ -1,17 +1,36 @@
-import React from 'react';
+import { Suspense } from 'react';
+import { EventCardSkeleton } from '@/components/skeletons/EventCardSkeleton';
+import { TimelineEventSkeleton } from '@/components/skeletons/TimelineEventSkeleton';
 import SearchForm from '@/components/SearchForm';
 import EventsContainer from '@/components/EventsContainer';
 import { getEvents } from '@/app/actions/events';
 
 export default async function Home() {
-  const evenimente = await getEvents();
-
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-[1400px] mx-auto px-3 md:px-8">
-        <SearchForm evenimente={evenimente} />
-        <EventsContainer evenimente={evenimente} />
+    <main className="min-h-screen bg-background animate-in fade-in duration-500">
+      <div className="container mx-auto px-4 pt-2 pb-8">
+        <Suspense
+          fallback={
+            <div className="space-y-8 animate-in fade-in duration-300">
+              {/* Horizontal scrolling events */}
+              <div className="flex gap-4 overflow-x-auto pb-4">
+                {[1, 2, 3, 4].map((i) => (
+                  <EventCardSkeleton key={i} />
+                ))}
+              </div>
+
+              {/* Timeline events */}
+              <div className="space-y-8">
+                {[1, 2, 3].map((i) => (
+                  <TimelineEventSkeleton key={i} />
+                ))}
+              </div>
+            </div>
+          }
+        >
+          <EventsContainer evenimente={await getEvents()} />
+        </Suspense>
       </div>
-    </div>
+    </main>
   );
 }

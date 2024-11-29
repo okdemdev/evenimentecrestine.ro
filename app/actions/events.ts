@@ -5,6 +5,7 @@ import Event from '@/models/Event';
 import { IEvent } from '@/types';
 
 export async function getEvents(): Promise<IEvent[]> {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   try {
     await dbConnect();
     const events = await Event.find({}).sort({ createdAt: -1 });
@@ -16,6 +17,7 @@ export async function getEvents(): Promise<IEvent[]> {
 }
 
 export async function getEventById(id: string): Promise<IEvent | null> {
+  await new Promise((resolve) => setTimeout(resolve, 500));
   try {
     await dbConnect();
     const event = await Event.findById(id);
