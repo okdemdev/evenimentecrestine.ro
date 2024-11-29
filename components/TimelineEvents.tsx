@@ -71,17 +71,17 @@ export default function TimelineEvents({ events = [], userCity, category }: Time
       <div className="relative">
         <div className="absolute left-[20px] md:left-[60px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#6a7bff] to-purple-500 rounded-full" />
 
-        <div className="space-y-8">
+        <div className="space-y-12">
           {Object.entries(groupedEvents).map(([dateKey, dateEvents]) => {
             const [month, day] = dateKey.split('-');
 
             return (
-              <div key={dateKey} className="space-y-8">
+              <div key={dateKey} className="space-y-12">
                 {dateEvents.map((event, index) => (
                   <div key={event._id} className="relative group">
                     {index === 0 && (
                       <div className="absolute left-0 md:left-[40px] z-10 flex flex-col items-center">
-                        <div className="text-center bg-white p-1 rounded shadow-sm border border-gray-100 w-[45px]">
+                        <div className="text-center bg-white p-2 rounded-lg shadow-sm border border-gray-100 w-[50px]">
                           <div className="text-xs uppercase font-medium text-[#6a7bff]">
                             {getMonthAbbrev(month)}
                           </div>
@@ -91,47 +91,50 @@ export default function TimelineEvents({ events = [], userCity, category }: Time
                     )}
 
                     {index > 0 && (
-                      <div className="absolute left-[20px] md:left-[60px] top-[20px] w-4 h-0.5 bg-gradient-to-r from-[#6a7bff] to-purple-500" />
+                      <div className="absolute left-[20px] md:left-[60px] top-[24px] w-4 h-0.5 bg-gradient-to-r from-[#6a7bff] to-purple-500" />
                     )}
 
-                    <div className="ml-16 md:ml-32 max-w-full md:max-w-2xl transform group-hover:-translate-y-1 transition-all duration-300">
-                      <div className="bg-white rounded-lg border border-gray-100 overflow-hidden group-hover:shadow-lg group-hover:border-[#6a7bff]/10 transition-transform hover:scale-[1.02] duration-300 p-4">
-                        <div className="flex flex-col md:flex-row gap-4">
-                          <div className="relative w-full md:w-52 aspect-video md:aspect-square">
+                    <div className="ml-16 md:ml-32 max-w-full md:max-w-3xl transform group-hover:-translate-y-1 transition-all duration-300">
+                      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group-hover:shadow-lg group-hover:border-[#6a7bff]/10 transition-all duration-300">
+                        <div className="flex flex-col md:flex-row">
+                          <div className="relative w-full md:w-64 h-40 md:h-auto">
                             <img
                               src={event.image}
                               alt={event.title}
-                              className="w-full h-full object-cover rounded-lg"
+                              className="w-full h-full object-cover"
                               loading="lazy"
                             />
                           </div>
 
-                          <div className="flex-1 flex flex-col justify-between">
-                            <div className="space-y-3">
-                              <div className="flex items-center gap-1.5 text-sm text-gray-500">
-                                <Clock className="w-4 h-4 shrink-0" />
-                                <span>{event.hour}</span>
+                          <div className="flex-1 p-3 md:p-5 flex flex-col">
+                            <div className="flex-1 space-y-3 md:space-y-4">
+                              <div>
+                                <div className="flex items-center gap-1.5 text-xs md:text-sm text-gray-500 mb-1 md:mb-2">
+                                  <Clock className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                  <span>{event.hour}</span>
+                                </div>
+                                <h3 className="text-base md:text-xl font-semibold text-gray-900 group-hover:text-[#6a7bff] transition-colors duration-300 line-clamp-2">
+                                  {event.title}
+                                </h3>
                               </div>
 
-                              <h3 className="text-lg md:text-xl font-semibold group-hover:text-[#6a7bff] transition-colors duration-300 line-clamp-2">
-                                {event.title}
-                              </h3>
-
-                              <div className="flex items-center text-gray-600">
-                                <MapPin className="w-4 h-4 mr-1.5 shrink-0" />
-                                <span className="text-base line-clamp-1">{event.location}</span>
+                              <div className="flex items-center gap-1.5 text-gray-600">
+                                <MapPin className="w-3.5 h-3.5 md:w-4 md:h-4 shrink-0" />
+                                <span className="text-xs md:text-sm line-clamp-1">
+                                  {event.location}
+                                </span>
                               </div>
                             </div>
 
-                            <div className="flex items-center justify-between mt-4">
+                            <div className="flex items-center justify-between mt-3 md:mt-5 pt-3 md:pt-5 border-t border-gray-100">
                               <div className="flex items-center gap-2">
-                                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#6a7bff]/5 text-[#6a7bff]">
+                                <span className="px-2 md:px-3 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium bg-[#6a7bff]/5 text-[#6a7bff]">
                                   {event.category}
                                 </span>
                                 <PriceTag price={event.price} />
                               </div>
                               <Link href={`/events/${event._id}`}>
-                                <Button className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white h-8 text-sm px-3">
+                                <Button className="bg-[#6a7bff] hover:bg-[#6a7bff]/90 text-white h-7 md:h-8 text-xs md:text-sm px-2 md:px-3">
                                   Vezi Detalii
                                 </Button>
                               </Link>
