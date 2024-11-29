@@ -62,17 +62,20 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
 
   const locationText = loading
     ? 'Se încarcă locația...'
-    : error || (!city && !selectedCity)
-    ? 'Evenimente ordonate după dată'
+    : selectedCity === ''
+    ? 'Evenimentele sunt sortate în funcție de dată'
     : selectedCity
     ? `Evenimente din ${selectedCity}`
-    : `Evenimente din ${city}, ${country}`;
+    : city
+    ? `Evenimente din ${city}, ${country}`
+    : 'Evenimentele sunt sortate în funcție de dată';
 
   const getEventsHeading = () => {
     if (loading) return 'Evenimente disponibile';
+    if (selectedCity === '') return 'Evenimente din toate orașele';
     if (selectedCity) return `Evenimente din ${selectedCity}`;
-    if (city && !selectedCity) return 'Evenimente din aproprierea ta';
-    return 'Evenimente disponibile';
+    if (city) return 'Evenimente din aproprierea ta';
+    return 'Evenimente din toate orașele';
   };
 
   return (
