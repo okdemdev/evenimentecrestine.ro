@@ -1,13 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { toast } from 'sonner';
+import { CheckCircle2 } from 'lucide-react';
 
 export function SubscribeForm() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  // Check localStorage on component mount
+  useEffect(() => {
+    const subscriptionStatus = localStorage.getItem('newsletter-subscribed');
+    if (subscriptionStatus === 'true') {
+      setIsSubscribed(true);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,20 +31,36 @@ export function SubscribeForm() {
 
       const data = await response.json();
 
-      if (!response.ok) throw new Error(data.error);
+      if (!response.ok && data.error !== 'Acest email este deja înregistrat pentru notificări.') {
+        throw new Error(data.error);
+      }
 
-      toast.success('Mulțumim pentru abonare!', {
-        description: 'Vei primi notificări când apar evenimente noi.',
-      });
+      // Store subscription status in localStorage
+      localStorage.setItem('newsletter-subscribed', 'true');
+      setIsSubscribed(true);
       setEmail('');
     } catch (error) {
-      toast.error('Oops!', {
-        description: error instanceof Error ? error.message : 'Something went wrong',
-      });
+      console.error('Subscription error:', error);
     } finally {
       setLoading(false);
     }
   };
+
+  if (isSubscribed) {
+    return (
+      <div className="text-center space-y-3 py-4 animate-in fade-in duration-500">
+        <div className="flex justify-center">
+          <CheckCircle2 className="w-12 h-12 text-green-500" />
+        </div>
+        <div className="space-y-2">
+          <h3 className="font-semibold text-gray-900">Mulțumim pentru abonare!</h3>
+          <p className="text-sm text-gray-600">
+            Te vom notifica când apar evenimente noi în zona ta.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 max-w-sm mx-auto">

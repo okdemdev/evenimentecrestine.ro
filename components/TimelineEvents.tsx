@@ -175,8 +175,8 @@ export default function TimelineEvents({
           <div className="relative">
             <div className="absolute left-[12px] md:left-[52px] w-4 h-4 rounded-full bg-gradient-to-r from-[#6a7bff] to-purple-500" />
             <div className="ml-16 md:ml-32 bg-white rounded-xl p-4 md:p-8 text-center border border-gray-100 shadow-sm">
-              <div className="max-w-md mx-auto space-y-4">
-                <div className="space-y-2">
+              <div className="max-w-md mx-auto">
+                <div className="space-y-2 mb-4">
                   <p className="text-gray-900 font-semibold">
                     Nu mai sunt evenimente disponibile pentru moment.
                   </p>
@@ -185,9 +185,6 @@ export default function TimelineEvents({
                   </p>
                 </div>
                 <SubscribeForm />
-                <p className="text-xs text-gray-500 px-2">
-                  Vei primi doar notificări despre evenimente noi. Poți să te dezabonezi oricând.
-                </p>
               </div>
             </div>
           </div>
