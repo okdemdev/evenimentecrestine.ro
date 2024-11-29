@@ -43,18 +43,24 @@ export default async function EventPage({ params }: { params: { id: string } }) 
           </Link>
         </div>
 
-        {/* Image Container */}
-        <div className="w-full bg-gray-100 relative">
-          <div className="relative w-full" style={{ paddingBottom: '75%' }}>
-            <Image src={event.image} alt={event.title} fill className="object-contain" priority />
+        {/* Image Container - Mobile */}
+        <div className="px-4 pt-4">
+          <div className="relative bg-gray-100 rounded-xl overflow-hidden min-h-[300px] h-[50vh] w-full flex items-center justify-center">
+            <Image
+              src={event.image}
+              alt={event.title}
+              fill
+              className="object-cover w-full h-full"
+              priority
+              sizes="100vw"
+              quality={100}
+            />
           </div>
-          {/* Gradient overlay for smooth transition */}
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-50 to-transparent" />
         </div>
 
         {/* Content for mobile/tablet */}
-        <div className="relative z-10 transform -translate-y-8 px-4">
-          <div className="bg-white rounded-t-xl shadow-lg">
+        <div className="px-4 -mt-6 relative z-10">
+          <div className="bg-white rounded-xl shadow-lg">
             <div className="p-4 sm:p-6 space-y-6">
               {/* Header */}
               <div className="flex flex-col gap-4">
@@ -148,9 +154,17 @@ export default async function EventPage({ params }: { params: { id: string } }) 
       {/* Desktop Layout */}
       <div className="hidden lg:grid grid-cols-2 gap-8 max-w-7xl mx-auto p-4 lg:p-8">
         {/* Left side - Image */}
-        <div className="bg-gray-100 rounded-xl p-4 lg:p-8">
-          <div className="relative w-full" style={{ paddingBottom: '75%' }}>
-            <Image src={event.image} alt={event.title} fill className="object-contain" priority />
+        <div className="bg-gray-100 rounded-xl overflow-hidden">
+          <div className="relative h-[calc(100vh-8rem)] w-full flex items-center justify-center">
+            <Image
+              src={event.image}
+              alt={event.title}
+              fill
+              className="object-cover w-full h-full"
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              quality={100}
+            />
           </div>
         </div>
 
