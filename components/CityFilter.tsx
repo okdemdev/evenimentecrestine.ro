@@ -3,6 +3,13 @@
 import React, { useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 import { romanianCities } from '@/utils/cities';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface CityFilterProps {
   selectedCity: string;
@@ -11,7 +18,6 @@ interface CityFilterProps {
 }
 
 export default function CityFilter({ selectedCity, onCityChange, userCity }: CityFilterProps) {
-  // Automatically set the city when userCity changes
   useEffect(() => {
     if (userCity && romanianCities.includes(userCity) && !selectedCity) {
       onCityChange(userCity);
@@ -19,20 +25,26 @@ export default function CityFilter({ selectedCity, onCityChange, userCity }: Cit
   }, [userCity, onCityChange, selectedCity]);
 
   return (
-    <div className="flex items-center gap-2">
-      <MapPin className="w-6 h-6 text-[#6a7bff]" />
-      <select
-        value={selectedCity}
-        onChange={(e) => onCityChange(e.target.value)}
-        className="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6a7bff] focus:border-transparent"
+    <div className="relative">
+      <Select
+        value={selectedCity || 'all'}
+        onValueChange={(value) => onCityChange(value === 'all' ? '' : value)}
       >
-        <option value="">Selecteaza orasul</option>
-        {romanianCities.map((city) => (
-          <option key={city} value={city}>
-            {city}
-          </option>
-        ))}
-      </select>
+        <SelectTrigger className="w-[180px] bg-white/50 backdrop-blur-sm border-gray-200 hover:bg-white/80 transition-colors">
+          <div className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-[#6a7bff]" />
+            <SelectValue placeholder="Alege orașul" />
+          </div>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">Toate orașele</SelectItem>
+          {romanianCities.map((city) => (
+            <SelectItem key={city} value={city}>
+              {city}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }

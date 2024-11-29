@@ -77,7 +77,7 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+      <div className="flex flex-col gap-4">
         <CategoryFilter activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
         <CityFilter selectedCity={selectedCity} onCityChange={setSelectedCity} userCity={city} />
       </div>
