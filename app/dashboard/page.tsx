@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { romanianCities } from '@/utils/cities';
 import { useRouter } from 'next/navigation';
+import PinEntry from '@/components/PinEntry';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -22,6 +23,22 @@ export default function Dashboard() {
     organizer: '',
     price: '',
   });
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const auth = sessionStorage.getItem('dashboard-auth');
+    setIsAuthenticated(auth === 'true');
+  }, []);
+
+  // Show loading state while checking auth
+  if (isAuthenticated === null) {
+    return null;
+  }
+
+  // Show PIN entry if not authenticated
+  if (!isAuthenticated) {
+    return <PinEntry />;
+  }
 
   const categories = ['conferinte', 'seminarii', 'concerte', 'festival', 'expozitii'];
 

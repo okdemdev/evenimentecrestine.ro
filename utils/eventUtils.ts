@@ -66,3 +66,7 @@ export const groupEventsByDate = (events: IEvent[]): Record<string, IEvent[]> =>
     return acc;
   }, {});
 };
+
+export const extractCity = (location: string): string => {
+  return location.split(',')[0].trim();
+};

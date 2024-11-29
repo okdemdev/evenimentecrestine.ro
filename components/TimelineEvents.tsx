@@ -3,7 +3,7 @@ import { Clock, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { IEvent } from '@/types';
-import { getMonthNumber, groupEventsByDate } from '@/utils/eventUtils';
+import { getMonthNumber, groupEventsByDate, extractCity } from '@/utils/eventUtils';
 
 interface TimelineEventsProps {
   events: IEvent[];
@@ -121,7 +121,7 @@ export default function TimelineEvents({ events = [], userCity, category }: Time
                               <div className="flex items-center gap-1.5 text-gray-600">
                                 <MapPin className="w-3.5 h-3.5 md:w-4 md:h-4 shrink-0" />
                                 <span className="text-xs md:text-sm line-clamp-1">
-                                  {event.location}
+                                  {extractCity(event.location)}
                                 </span>
                               </div>
                             </div>

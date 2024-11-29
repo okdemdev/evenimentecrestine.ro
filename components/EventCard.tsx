@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { CalendarIcon, Clock3Icon, LocateIcon } from 'lucide-react';
 import Link from 'next/link';
 import { IEvent } from '@/types';
+import { extractCity } from '@/utils/eventUtils';
 
 interface EventCardProps {
   event: IEvent;
@@ -54,7 +55,7 @@ export default function EventCard({ event }: EventCardProps) {
         </div>
         <div className="flex items-center gap-1 text-xs md:text-sm text-muted-foreground">
           <LocateIcon className="w-3.5 h-3.5 md:w-4 md:h-4 shrink-0" />
-          <span className="truncate">{event.location}</span>
+          <span className="truncate">{extractCity(event.location)}</span>
         </div>
       </CardContent>
       <CardFooter className="px-3 md:px-4 pb-3 md:pb-4 pt-0 flex justify-between items-center">
