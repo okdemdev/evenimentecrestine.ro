@@ -155,15 +155,15 @@ export default async function EventPage({ params }: { params: { id: string } }) 
       </div>
 
       {/* Desktop Layout */}
-      <div className="hidden lg:grid grid-cols-2 gap-8 max-w-7xl mx-auto p-4 lg:p-8">
+      <div className="hidden lg:grid grid-cols-2 gap-8 max-w-7xl mx-auto p-4 lg:p-8 h-[calc(100vh-2rem)]">
         {/* Left side - Image */}
-        <div className="bg-gray-50 rounded-[24px] overflow-hidden h-fit">
-          <div className="relative w-full" style={{ paddingBottom: '100%' }}>
+        <div className="bg-gray-50 rounded-[24px] overflow-hidden sticky top-8 h-[calc(100vh-4rem)]">
+          <div className="relative w-full h-full">
             <Image
               src={event.image}
               alt={event.title}
               fill
-              className="object-cover"
+              className="object-contain"
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
               quality={100}
@@ -172,7 +172,7 @@ export default async function EventPage({ params }: { params: { id: string } }) 
         </div>
 
         {/* Right side - Content */}
-        <div className="bg-white rounded-[24px] shadow-sm border border-gray-100 p-4 lg:p-8">
+        <div className="bg-white rounded-[24px] shadow-sm border border-gray-100 p-4 lg:p-8 flex flex-col h-[calc(100vh-4rem)]">
           {/* Back Button */}
           <div className="mb-6">
             <Link href="/">
@@ -183,83 +183,88 @@ export default async function EventPage({ params }: { params: { id: string } }) 
             </Link>
           </div>
 
-          {/* Header */}
-          <div className="flex flex-col gap-4 mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">{event.title}</h1>
-            <div className="flex items-center gap-3">
-              <PriceTag />
-              <ShareButton />
+          {/* Scrollable content area */}
+          <div className="flex-1 overflow-y-auto pr-2">
+            {/* Header */}
+            <div className="flex flex-col gap-4 mb-8">
+              <h1 className="text-3xl font-bold text-gray-900">{event.title}</h1>
+              <div className="flex items-center gap-3">
+                <PriceTag />
+                <ShareButton />
+              </div>
+            </div>
+
+            {/* Event Details Grid */}
+            <div className="space-y-4 mb-8">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
+                  <div className="flex-shrink-0">
+                    <CalendarIcon className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Data</p>
+                    <p className="text-base font-semibold text-gray-900">
+                      {event.day} {event.month}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
+                  <div className="flex-shrink-0">
+                    <Clock3Icon className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Ora</p>
+                    <p className="text-base font-semibold text-gray-900">{event.hour}</p>
+                  </div>
+                </div>
+
+                {/* Location - Full width */}
+                <div className="col-span-2">
+                  <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
+                    <div className="flex-shrink-0">
+                      <LocateIcon className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-600">Locație</p>
+                      <p className="text-base font-semibold text-gray-900">{event.location}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Organizer - Full width */}
+                <div className="col-span-2">
+                  <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
+                    <div className="flex-shrink-0">
+                      <Users2 className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-600">Organizator</p>
+                      <p className="text-base font-semibold text-gray-900">{event.organizer}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* About Section */}
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-900 mb-3">Despre eveniment</h2>
+                  <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">{event.about}</p>
+                </div>
+
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-900 mb-3">Categorie</h2>
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                    {event.category}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Event Details Grid */}
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
-              <div className="flex-shrink-0">
-                <CalendarIcon className="w-6 h-6 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-600">Data</p>
-                <p className="text-base font-semibold text-gray-900">
-                  {event.day} {event.month}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
-              <div className="flex-shrink-0">
-                <Clock3Icon className="w-6 h-6 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-600">Ora</p>
-                <p className="text-base font-semibold text-gray-900">{event.hour}</p>
-              </div>
-            </div>
-
-            {/* Location - Full width */}
-            <div className="col-span-2">
-              <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
-                <div className="flex-shrink-0">
-                  <LocateIcon className="w-6 h-6 text-blue-600" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-600">Locație</p>
-                  <p className="text-base font-semibold text-gray-900">{event.location}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Organizer - Full width */}
-            <div className="col-span-2">
-              <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
-                <div className="flex-shrink-0">
-                  <Users2 className="w-6 h-6 text-blue-600" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-600">Organizator</p>
-                  <p className="text-base font-semibold text-gray-900">{event.organizer}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* About Section */}
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">Despre eveniment</h2>
-              <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">{event.about}</p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">Categorie</h2>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                {event.category}
-              </span>
-            </div>
-          </div>
-
-          {/* CTA Section */}
-          <div className="mt-10 pt-6 border-t">
+          {/* CTA Section - Always visible */}
+          <div className="pt-6 border-t mt-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">Vrei să participi?</h3>
