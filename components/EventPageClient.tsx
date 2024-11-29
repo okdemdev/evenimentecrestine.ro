@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, CalendarIcon, Clock3Icon, LocateIcon, Users2 } from 'lucide-react';
+import { ArrowLeft, CalendarIcon, Clock3Icon, LocateIcon, Users2, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ShareButton } from '@/components/ShareButton';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { ParticipateButton } from '@/components/ParticipateButton';
 import { BottomCTA } from '@/components/BottomCTA';
 import { IEvent } from '@/types';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 interface EventPageClientProps {
   event: IEvent;
@@ -30,6 +31,11 @@ export default function EventPageClient({ event }: EventPageClientProps) {
         {event.price}
       </span>
     );
+  };
+
+  const handleDriveClick = () => {
+    const encodedAddress = encodeURIComponent(event.location);
+    window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`, '_blank');
   };
 
   return (
@@ -108,20 +114,26 @@ export default function EventPageClient({ event }: EventPageClientProps) {
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
+                  <div
+                    onClick={handleDriveClick}
+                    className="flex items-center gap-3 p-4 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer group transition-colors"
+                  >
                     <div className="flex-shrink-0">
                       <LocateIcon className="w-6 h-6 text-blue-600" />
                     </div>
-                    <div className="flex-1">
+                    <div>
                       <p className="text-sm font-medium text-gray-600">Locație</p>
                       <p className="text-base font-semibold text-gray-900">{event.location}</p>
+                      <span className="text-sm text-blue-600 group-hover:text-blue-700">
+                        Deschide în Google Maps
+                      </span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
-                    <div className="flex-shrink-0">
-                      <Users2 className="w-6 h-6 text-blue-600" />
-                    </div>
+                    <Avatar className="h-12 w-12 bg-blue-100 text-blue-600">
+                      <AvatarFallback>{event.organizer.slice(0, 2).toUpperCase()}</AvatarFallback>
+                    </Avatar>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-600">Organizator</p>
                       <p className="text-base font-semibold text-gray-900">{event.organizer}</p>
@@ -214,20 +226,26 @@ export default function EventPageClient({ event }: EventPageClientProps) {
               </div>
 
               <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
+                <div
+                  onClick={handleDriveClick}
+                  className="flex items-center gap-3 p-4 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer group transition-colors"
+                >
                   <div className="flex-shrink-0">
                     <LocateIcon className="w-6 h-6 text-blue-600" />
                   </div>
-                  <div className="flex-1">
+                  <div>
                     <p className="text-sm font-medium text-gray-600">Locație</p>
                     <p className="text-base font-semibold text-gray-900">{event.location}</p>
+                    <span className="text-sm text-blue-600 group-hover:text-blue-700">
+                      Open in Google Maps
+                    </span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50">
-                  <div className="flex-shrink-0">
-                    <Users2 className="w-6 h-6 text-blue-600" />
-                  </div>
+                  <Avatar className="h-12 w-12 bg-blue-100 text-blue-600">
+                    <AvatarFallback>{event.organizer.slice(0, 2).toUpperCase()}</AvatarFallback>
+                  </Avatar>
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-600">Organizator</p>
                     <p className="text-base font-semibold text-gray-900">{event.organizer}</p>
