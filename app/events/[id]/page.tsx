@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ShareButton } from '@/components/ShareButton';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default async function EventPage({ params }: { params: { id: string } }) {
   const event = await getEventById(params.id);
@@ -23,7 +24,7 @@ export default async function EventPage({ params }: { params: { id: string } }) 
     }
     return (
       <span className="inline-block bg-[#6a7bff]/10 text-[#6a7bff] px-3 py-1.5 rounded-full text-sm font-medium">
-        {event.price} RON
+        {event.price}
       </span>
     );
   };
@@ -40,11 +41,12 @@ export default async function EventPage({ params }: { params: { id: string } }) 
 
         <Card className="overflow-hidden">
           <div className="relative aspect-video">
-            <img
+            <Image
               src={event.image}
-              alt={event.title}
-              className="object-cover w-full h-full"
-              loading="lazy"
+              alt={`${event.title} event`}
+              fill
+              className="object-cover"
+              priority
             />
           </div>
 

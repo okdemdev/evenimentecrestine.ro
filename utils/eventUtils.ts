@@ -1,4 +1,19 @@
 import { EventCardType } from '@/app/(root)/page';
+import { evenimente } from '@/app/(root)/page';
+
+export type Event = {
+  _id: string;
+  title: string;
+  hour: string;
+  month: string;
+  day: string;
+  location: string;
+  category: string;
+  about: string;
+  image: string;
+  organizer: string;
+  price: string;
+};
 
 export const getMonthNumber = (month: string): number => {
   const monthMap: { [key: string]: number } = {
@@ -69,4 +84,9 @@ export const groupEventsByDate = (events: EventCardType[]): Record<string, Event
     acc[dateKey].push(event);
     return acc;
   }, {});
+};
+
+export const getEventById = async (id: string): Promise<Event | null> => {
+  const event = evenimente.find((e) => e._id === id);
+  return event || null;
 };
