@@ -68,7 +68,9 @@ export default async function EventPage({ params }: { params: { id: string } }) 
             <div className="p-4 space-y-6">
               {/* Header */}
               <div className="flex flex-col gap-4">
-                <h1 className="text-2xl font-bold text-gray-900">{event.title}</h1>
+                <h1 className="text-2xl font-bold text-gray-900 break-words whitespace-normal">
+                  {event.title}
+                </h1>
                 <div className="flex items-center gap-3">
                   <PriceTag />
                 </div>
@@ -157,13 +159,13 @@ export default async function EventPage({ params }: { params: { id: string } }) 
       {/* Desktop Layout */}
       <div className="hidden lg:grid grid-cols-2 gap-8 max-w-7xl mx-auto p-4 lg:p-8 h-[calc(100vh-2rem)]">
         {/* Left side - Image */}
-        <div className="bg-gray-50 rounded-[24px] overflow-hidden sticky top-8 h-[calc(100vh-4rem)]">
+        <div className="bg-white rounded-[24px] shadow-sm border border-gray-100 overflow-hidden sticky top-8 h-[calc(100vh-4rem)] flex items-center justify-center">
           <div className="relative w-full h-full">
             <Image
               src={event.image}
               alt={event.title}
               fill
-              className="object-contain"
+              className="object-cover w-full h-full"
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
               quality={100}
@@ -188,7 +190,9 @@ export default async function EventPage({ params }: { params: { id: string } }) 
           <div className="flex-1 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400 scrollbar-thumb-rounded-full">
             {/* Header */}
             <div className="flex flex-col gap-4 mb-8">
-              <h1 className="text-3xl font-bold text-gray-900">{event.title}</h1>
+              <h1 className="text-3xl font-bold text-gray-900 break-words whitespace-normal">
+                {event.title}
+              </h1>
               <div className="flex items-center gap-3">
                 <PriceTag />
               </div>
