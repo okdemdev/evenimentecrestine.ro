@@ -1,3 +1,5 @@
+'use client';
+
 interface TicketImageProps {
   imageUrl?: string;
 }

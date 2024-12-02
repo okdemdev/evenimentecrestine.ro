@@ -1,8 +1,10 @@
+'use client';
 import { TicketActions } from './TicketActions';
 import { TicketBarcode } from './TicketBarcode';
 import { TicketDetails } from './TicketDetails';
 import { TicketHeader } from './TicketHeader';
 import { TicketImage } from './TicketImage';
+import { useRef } from 'react';
 
 interface TicketViewProps {
   participant: {
@@ -21,13 +23,15 @@ interface TicketViewProps {
 }
 
 export function TicketView({ participant }: TicketViewProps) {
+  const ticketRef = useRef<HTMLDivElement>(null);
+
   const formatDate = () => {
     return `${participant.eventId.month} ${participant.eventId.day}`;
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-md mx-auto bg-white rounded-xl shadow-sm">
+      <div ref={ticketRef} className="max-w-md mx-auto bg-white rounded-xl shadow-sm">
         <TicketHeader />
         <TicketImage imageUrl={participant.eventId.image} />
         <TicketDetails
@@ -40,7 +44,7 @@ export function TicketView({ participant }: TicketViewProps) {
           time={participant.eventId.hour}
         />
         <TicketBarcode />
-        <TicketActions />
+        <TicketActions ticketRef={ticketRef} />
         <div className="text-center text-sm text-gray-500 p-4">
           <p>Acest bilet este doar informativ și nu trebuie prezentat la intrarea în eveniment.</p>
           <p className="mt-1">Te așteptăm cu drag!</p>

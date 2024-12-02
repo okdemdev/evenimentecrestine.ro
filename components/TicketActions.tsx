@@ -3,21 +3,40 @@
 import { Download, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { generateTicketPDF } from '@/utils/pdfUtils';
+import { shareTicket } from '@/utils/shareUtils';
+import { RefObject } from 'react';
 
-export function TicketActions() {
-  const handleDownload = () => {
-    toast.success('Biletul a fost descărcat cu succes!');
+interface TicketActionsProps {
+  ticketRef: RefObject<HTMLDivElement>;
+}
+
+export function TicketActions({ ticketRef }: TicketActionsProps) {
+  const handleDownload = async () => {
+    if (!ticketRef.current) return;
+
+    toast.loading('Se generează PDF-ul...', { id: 'pdf-loading' });
+
+    const success = await generateTicketPDF(ticketRef.current);
+
+    if (success) {
+      toast.success('Biletul a fost descărcat cu succes!', { id: 'pdf-loading' });
+    } else {
+      toast.error('A apărut o eroare la descărcarea biletului', { id: 'pdf-loading' });
+    }
   };
 
   const handleShare = async () => {
-    try {
-      await navigator.share({
-        title: 'Biletul meu',
-        text: 'Voi participa la acest eveniment!',
-        url: window.location.href,
-      });
-    } catch (err) {
-      toast.error('Partajarea nu a fost posibilă');
+    const result = await shareTicket();
+
+    if (result.success) {
+      if (result.copied) {
+        toast.success('Link-ul a fost copiat în clipboard!');
+      } else {
+        toast.success('Mulțumim pentru distribuire!');
+      }
+    } else {
+      toast.error('Nu s-a putut distribui biletul');
     }
   };
 
