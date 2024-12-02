@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import { EventCardSkeleton } from '@/components/skeletons/EventCardSkeleton';
 import { TimelineEventSkeleton } from '@/components/skeletons/TimelineEventSkeleton';
-import SearchForm from '@/components/SearchForm';
 import EventsContainer from '@/components/EventsContainer';
 import { getEvents } from '@/app/actions/events';
 

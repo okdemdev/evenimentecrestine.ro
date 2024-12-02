@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { CalendarIcon, Clock3Icon, LocateIcon } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { IEvent } from '@/types';
 import { extractCity } from '@/utils/eventUtils';
 
@@ -30,10 +31,11 @@ export default function EventCard({ event }: EventCardProps) {
   return (
     <Card className="w-[240px] md:w-[300px] shrink-0 transition-transform hover:scale-[1.02]">
       <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-        <img
+        <Image
           src={event.image}
           alt={event.title}
-          className="absolute inset-0 w-full h-full object-cover rounded-t-lg"
+          fill
+          className="object-cover rounded-t-lg"
           loading="lazy"
         />
       </div>

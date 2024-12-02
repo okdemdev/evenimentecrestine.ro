@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, CalendarIcon, Clock3Icon, LocateIcon, Users2, MapPin } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowLeft, CalendarIcon, Clock3Icon, LocateIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ShareButton } from '@/components/ShareButton';
 import Link from 'next/link';
@@ -9,15 +9,13 @@ import Image from 'next/image';
 import { ParticipateButton } from '@/components/ParticipateButton';
 import { BottomCTA } from '@/components/BottomCTA';
 import { IEvent } from '@/types';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 interface EventPageClientProps {
   event: IEvent;
 }
 
 export default function EventPageClient({ event }: EventPageClientProps) {
-  const [isCtaVisible, setIsCtaVisible] = useState(false);
-
   const PriceTag = () => {
     if (event.price.toLowerCase() === 'gratuit') {
       return (

@@ -2,7 +2,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, Calendar, MapPin } from 'lucide-react';
 import { IEvent } from '@/types';
-import { useRouter } from 'next/navigation';
 
 interface SearchFormProps {
   query?: string;
@@ -14,7 +13,6 @@ const SearchForm = ({ query, evenimente }: SearchFormProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
 
   // Filter events based on search query
   const filteredEvents = evenimente.filter(
@@ -41,10 +39,8 @@ const SearchForm = ({ query, evenimente }: SearchFormProps) => {
     setIsDropdownOpen(value.length > 0);
   };
 
-  const handleEventClick = (eventId: string) => {
+  const handleEventClick = () => {
     setIsDropdownOpen(false);
-    // You can implement navigation to event details page here
-    // router.push(`/events/${eventId}`);
   };
 
   return (
@@ -67,7 +63,7 @@ const SearchForm = ({ query, evenimente }: SearchFormProps) => {
             {filteredEvents.map((event) => (
               <button
                 key={event._id}
-                onClick={() => handleEventClick(event._id)}
+                onClick={handleEventClick}
                 className="w-full px-4 py-3 hover:bg-gray-50 flex flex-col gap-1 transition-colors border-b border-gray-100 last:border-0"
               >
                 <h3 className="text-left font-medium text-gray-900">{event.title}</h3>

@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       participant,
       ticketUrl: `/ticket/${participant._id}`,
     });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
   }
 }

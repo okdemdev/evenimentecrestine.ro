@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     const subscriber = await Subscriber.create({ email });
 
     return NextResponse.json({ success: true, subscriber });
-  } catch (error: any) {
+  } catch (error: Error & { code?: number }) {
     if (error.code === 11000) {
       return NextResponse.json(
         { error: 'Acest email este deja înregistrat pentru notificări.' },

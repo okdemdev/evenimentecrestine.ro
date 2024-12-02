@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Clock, MapPin } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { IEvent } from '@/types';
 import { getMonthNumber, groupEventsByDate, extractCity } from '@/utils/eventUtils';
@@ -9,8 +10,6 @@ import { TimelineEventSkeleton } from '@/components/skeletons/TimelineEventSkele
 
 interface TimelineEventsProps {
   events: IEvent[];
-  userCity?: string | null;
-  category: string;
   loading: boolean;
 }
 
@@ -47,20 +46,8 @@ const PriceTag = ({ price }: { price: string }) => {
 
 export default function TimelineEvents({
   events = [],
-  userCity,
-  category,
   loading,
 }: TimelineEventsProps) {
-  if (loading) {
-    return (
-      <div className="space-y-8">
-        {[1, 2, 3].map((i) => (
-          <TimelineEventSkeleton key={i} />
-        ))}
-      </div>
-    );
-  }
-
   const sortedEvents = useMemo(() => {
     if (!events || events.length === 0) return [];
 
@@ -79,6 +66,16 @@ export default function TimelineEvents({
   const groupedEvents = useMemo(() => {
     return groupEventsByDate(sortedEvents);
   }, [sortedEvents]);
+
+  if (loading) {
+    return (
+      <div className="space-y-8">
+        {[1, 2, 3].map((i) => (
+          <TimelineEventSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
 
   if (!events || events.length === 0) {
     return <div className="mt-6 text-center text-gray-500">Nu există evenimente disponibile.</div>;
@@ -116,10 +113,11 @@ export default function TimelineEvents({
                       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group-hover:shadow-lg group-hover:border-[#6a7bff]/10 transition-all duration-300">
                         <div className="flex flex-col md:flex-row">
                           <div className="relative w-full md:w-64 h-40 md:h-auto">
-                            <img
+                            <Image
                               src={event.image}
                               alt={event.title}
-                              className="w-full h-full object-cover"
+                              fill
+                              className="object-cover"
                               loading="lazy"
                             />
                           </div>

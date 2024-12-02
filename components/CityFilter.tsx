@@ -22,7 +22,7 @@ export default function CityFilter({ selectedCity, onCityChange, userCity }: Cit
     if (userCity && !selectedCity && romanianCities.includes(userCity)) {
       onCityChange(userCity);
     }
-  }, [userCity]);
+  }, [userCity, selectedCity, onCityChange]);
 
   return (
     <div className="relative">
