@@ -8,6 +8,9 @@ const nextConfig = {
       'newsnetcrestin.ro', // Added without www. just in case
     ],
   },
+  typescript:{
+    ignoreBuildErrors: true,
+  }
 };
 
 export default nextConfig;

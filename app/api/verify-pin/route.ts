@@ -16,7 +16,8 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ error: 'Invalid PIN' }, { status: 401 });
-  } catch (error) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_error) {
     return NextResponse.json({ error: 'Failed to verify PIN' }, { status: 500 });
   }
 }

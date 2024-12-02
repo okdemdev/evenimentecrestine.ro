@@ -18,6 +18,7 @@ export async function POST(request: Request) {
       participant,
       ticketUrl: `/ticket/${participant._id}`,
     });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_error) {
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
   }

@@ -21,9 +21,7 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
   const [selectedCity, setSelectedCity] = useState('');
   const {
     city,
-    country,
     loading,
-    error,
     showPermissionPopup,
     setShowPermissionPopup,
     requestGeolocation,
@@ -68,7 +66,7 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
     : selectedCity
     ? `Evenimente din ${selectedCity}`
     : city
-    ? `Evenimente din ${city}, ${country}`
+    ? `Evenimente din ${city}`
     : 'Evenimentele sunt sortate în funcție de dată';
 
   const getEventsHeading = () => {

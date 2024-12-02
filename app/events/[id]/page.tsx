@@ -4,15 +4,16 @@ import { getEventById } from '@/app/actions/events';
 import { EventPageSkeleton } from '@/components/skeletons/EventPageSkeleton';
 import EventPageClient from '@/components/EventPageClient';
 
-export default async function EventPage({ params }: { params: { id: string } }) {
-  return (
-    <Suspense fallback={<EventPageSkeleton />}>
-      <EventContent params={params} />
-    </Suspense>
-  );
+interface PageParams {
+  id: string;
 }
 
-async function EventContent({ params }: { params: { id: string } }) {
+interface Props {
+  params: Promise<PageParams>;
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function EventPage({ params }: Props) {
   const { id } = await params;
   const event = await getEventById(id);
 
@@ -20,5 +21,9 @@ async function EventContent({ params }: { params: { id: string } }) {
     notFound();
   }
 
-  return <EventPageClient event={event} />;
+  return (
+    <Suspense fallback={<EventPageSkeleton />}>
+      <EventPageClient event={event} />
+    </Suspense>
+  );
 }

@@ -32,7 +32,8 @@ export default function PinEntry() {
       } else {
         setError('PIN incorect');
       }
-    } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_err) {
       setError('A apărut o eroare. Încearcă din nou.');
     } finally {
       setLoading(false);
