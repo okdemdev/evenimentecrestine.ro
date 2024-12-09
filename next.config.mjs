@@ -6,11 +6,12 @@ const nextConfig = {
       'images.unsplash.com',
       'www.newsnetcrestin.ro',
       'newsnetcrestin.ro', // Added without www. just in case
+      'static.iabilet.ro',
     ],
   },
-  typescript:{
+  typescript: {
     ignoreBuildErrors: true,
-  }
+  },
 };
 
 export default nextConfig;
