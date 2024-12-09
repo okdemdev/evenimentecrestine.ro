@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, CalendarIcon, Clock3Icon, LocateIcon } from 'lucide-react';
+import { ArrowLeft, CalendarIcon, Clock3Icon, LocateIcon, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ShareButton } from '@/components/ShareButton';
 import Link from 'next/link';
@@ -9,12 +9,15 @@ import { ParticipateButton } from '@/components/ParticipateButton';
 import { BottomCTA } from '@/components/BottomCTA';
 import { IEvent } from '@/types';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useState } from 'react';
 
 interface EventPageClientProps {
   event: IEvent;
 }
 
 export default function EventPageClient({ event }: EventPageClientProps) {
+  const [isNavigating, setIsNavigating] = useState(false);
+
   const PriceTag = () => {
     if (event.price.toLowerCase() === 'gratuit') {
       return (
@@ -35,6 +38,26 @@ export default function EventPageClient({ event }: EventPageClientProps) {
     window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`, '_blank');
   };
 
+  const handleBack = () => {
+    setIsNavigating(true);
+  };
+
+  const BackButton = () => (
+    <Button
+      variant="outline"
+      className="bg-white/90 hover:bg-white"
+      onClick={handleBack}
+      disabled={isNavigating}
+    >
+      {isNavigating ? (
+        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+      ) : (
+        <ArrowLeft className="w-4 h-4 mr-2" />
+      )}
+      Înapoi
+    </Button>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Mobile/Tablet Layout */}
@@ -42,10 +65,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
         {/* Navigation Buttons */}
         <div className="fixed top-4 left-4 right-4 z-20 flex justify-between items-center">
           <Link href="/">
-            <Button variant="outline" className="bg-white/90 hover:bg-white">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Înapoi
-            </Button>
+            <BackButton />
           </Link>
           <ShareButton />
         </div>
@@ -173,10 +193,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
           {/* Navigation Buttons */}
           <div className="flex justify-between items-center mb-6">
             <Link href="/">
-              <Button variant="outline" className="bg-white hover:bg-gray-50">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Înapoi
-              </Button>
+              <BackButton />
             </Link>
             <ShareButton />
           </div>

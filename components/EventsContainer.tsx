@@ -6,7 +6,6 @@ import CategoryFilter from './CategoryFilter';
 import EventCard from './EventCard';
 import TimelineEvents from './TimelineEvents';
 import CityFilter from './CityFilter';
-import LocationPermissionPopup from './LocationPermissionPopup';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { sortEventsByDateAndLocation } from '@/utils/eventUtils';
 import { IEvent } from '@/types';
@@ -19,13 +18,7 @@ interface EventsContainerProps {
 export default function EventsContainer({ evenimente }: EventsContainerProps) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedCity, setSelectedCity] = useState('');
-  const {
-    city,
-    loading,
-    showPermissionPopup,
-    setShowPermissionPopup,
-    requestGeolocation,
-  } = useGeolocation();
+  const { city, loading } = useGeolocation();
 
   // First, filter events by category
   const filteredByCategory = useMemo(() => {
@@ -53,11 +46,6 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
     if (!filteredByLocation) return [];
     return sortEventsByDateAndLocation(filteredByLocation, selectedCity || city);
   }, [filteredByLocation, selectedCity, city]);
-
-  const handleRequestLocation = () => {
-    setShowPermissionPopup(false);
-    requestGeolocation();
-  };
 
   const locationText = loading
     ? 'Se încarcă locația...'
@@ -134,13 +122,6 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
         category={activeCategory}
         loading={loading}
       />
-
-      {showPermissionPopup && (
-        <LocationPermissionPopup
-          onClose={() => setShowPermissionPopup(false)}
-          onRequestLocation={handleRequestLocation}
-        />
-      )}
     </>
   );
 }

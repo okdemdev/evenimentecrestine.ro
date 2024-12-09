@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'sonner';
+import { Suspense } from 'react';
+import { GlobalLoading } from '@/components/GlobalLoading';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -20,9 +22,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ro">
       <body className={`${poppins.variable} font-poppins antialiased`}>
-        {children}
+        <Suspense fallback={<GlobalLoading />}>{children}</Suspense>
         <Toaster position="top-center" />
       </body>
     </html>

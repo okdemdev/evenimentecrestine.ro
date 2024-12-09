@@ -1,12 +1,28 @@
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { Participant } from '@/models/Participant';
 import dbConnect from '@/lib/mongodb';
 import { TicketView } from '@/components/TicketView';
 import { ObjectId } from 'mongodb';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 export default async function TicketPage({ params }: { params: { id: string } }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+          <LoadingSpinner size="lg" />
+          <p className="mt-4 text-sm text-muted-foreground">Se încarcă biletul...</p>
+        </div>
+      }
+    >
+      <TicketContent id={params.id} />
+    </Suspense>
+  );
+}
+
+async function TicketContent({ id }: { id: string }) {
   try {
-    const { id } = await params;
     await dbConnect();
 
     // Validate ID format first

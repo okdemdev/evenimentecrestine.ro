@@ -39,15 +39,18 @@ export function TicketView({ participant }: TicketViewProps) {
           organizer={participant.eventId.organizer}
           location={participant.eventId.location}
           name={participant.email.split('@')[0]}
-          seat="Fără loc"
+          seat="Orice loc liber"
           date={formatDate()}
           time={participant.eventId.hour}
         />
         <TicketBarcode />
+        <p className="text-sm text-[#6a7bff] font-medium text-center px-4 pb-2">
+          Fă o captură de ecran sau descarcă biletul folosind butonul de mai jos
+        </p>
         <TicketActions ticketRef={ticketRef} />
-        <div className="text-center text-sm text-gray-500 p-4">
+        <div className="text-center text-sm text-gray-500 p-4 space-y-2">
           <p>Acest bilet este doar informativ și nu trebuie prezentat la intrarea în eveniment.</p>
-          <p className="mt-1">Te așteptăm cu drag!</p>
+          <p>Te așteptăm cu drag!</p>
         </div>
       </div>
     </div>

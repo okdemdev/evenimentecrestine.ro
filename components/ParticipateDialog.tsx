@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { CheckCircle, Mail, Phone } from 'lucide-react';
 
 interface ParticipateDialogProps {
   eventId: string;
@@ -45,19 +47,27 @@ export function ParticipateDialog({ eventId, isOpen, onClose }: ParticipateDialo
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] p-0 overflow-hidden">
-        <div className="bg-[#6a7bff] text-white p-6">
+      <DialogContent className="sm:max-w-[425px] p-0 overflow-hidden rounded-2xl">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-[#6a7bff] to-[#8b96ff] text-white p-8"
+        >
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-center">
               Confirmă participarea
             </DialogTitle>
+            <p className="text-center text-white/80 mt-2">
+              Completează datele tale pentru a primi biletul
+            </p>
           </DialogHeader>
-        </div>
+        </motion.div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium">
+              <Label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
+                <Mail className="w-4 h-4 text-[#6a7bff]" />
                 Email
               </Label>
               <Input
@@ -66,13 +76,14 @@ export function ParticipateDialog({ eventId, isOpen, onClose }: ParticipateDialo
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="email@example.com"
-                className="w-full px-3 py-2"
+                className="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-[#6a7bff] focus:ring-[#6a7bff]"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-sm font-medium">
+              <Label htmlFor="phone" className="text-sm font-medium flex items-center gap-2">
+                <Phone className="w-4 h-4 text-[#6a7bff]" />
                 Număr de telefon
               </Label>
               <Input
@@ -81,25 +92,39 @@ export function ParticipateDialog({ eventId, isOpen, onClose }: ParticipateDialo
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="07xxxxxxxx"
-                className="w-full px-3 py-2"
+                className="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-[#6a7bff] focus:ring-[#6a7bff]"
                 required
               />
             </div>
           </div>
 
-          <div className="text-sm text-gray-500 space-y-1.5">
-            <p>• Vei primi un email de confirmare</p>
-            <p>• Poți anula oricând participarea</p>
-            <p>• Nu este nevoie să prezinți biletul la intrare</p>
+          <div className="bg-gray-50 rounded-xl p-4 space-y-2">
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <CheckCircle className="w-4 h-4 text-green-500" />
+              <p>Vei primi un email de confirmare</p>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <CheckCircle className="w-4 h-4 text-green-500" />
+              <p>Poți anula oricând participarea</p>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <CheckCircle className="w-4 h-4 text-green-500" />
+              <p>Nu este nevoie să prezinți biletul la intrare</p>
+            </div>
           </div>
 
           <div className="flex gap-3 pt-3">
-            <Button type="button" variant="outline" onClick={onClose} className="flex-1">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              className="flex-1 rounded-xl hover:bg-gray-50"
+            >
               Anulează
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-[#6a7bff] hover:bg-[#6a7bff]/90"
+              className="flex-1 bg-gradient-to-r from-[#6a7bff] to-[#8b96ff] text-white rounded-xl hover:opacity-90 transition-opacity"
               disabled={loading}
             >
               {loading ? 'Se procesează...' : 'Confirmă'}
