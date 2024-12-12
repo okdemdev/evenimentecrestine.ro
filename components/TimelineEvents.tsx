@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import { Clock, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
