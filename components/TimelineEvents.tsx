@@ -4,13 +4,11 @@ import React, { useMemo, useRef } from 'react';
 import { Clock, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { IEvent } from '@/types';
 import { getMonthNumber, groupEventsByDate, extractCity } from '@/utils/eventUtils';
 import { SubscribeForm } from '@/components/SubscribeForm';
 import { TimelineEventSkeleton } from '@/components/skeletons/TimelineEventSkeleton';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 interface TimelineEventsProps {
   events: IEvent[];
@@ -50,17 +48,8 @@ const PriceTag = ({ price }: { price: string }) => {
 
 const TimelineEvent = React.memo(
   ({ event, index, month, day }: { event: IEvent; index: number; month: string; day: string }) => {
-    const eventRef = useRef(null);
-    const isVisible = useIntersectionObserver({ ref: eventRef });
-
     return (
-      <motion.div
-        ref={eventRef}
-        initial={{ opacity: 0, y: 20 }}
-        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        className="relative group"
-      >
+      <div className="relative group">
         {index === 0 && (
           <div className="absolute left-0 md:left-[40px] z-10 flex flex-col items-center">
             <div className="text-center bg-white p-2 rounded-lg shadow-sm border border-gray-100 w-[50px]">
@@ -76,8 +65,8 @@ const TimelineEvent = React.memo(
           <div className="absolute left-[20px] md:left-[60px] top-[24px] w-4 h-0.5 bg-gradient-to-r from-[#6a7bff] to-purple-500" />
         )}
 
-        <div className="ml-16 md:ml-32 max-w-full md:max-w-3xl transform group-hover:-translate-y-1 transition-all duration-300">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group-hover:shadow-lg group-hover:border-[#6a7bff]/10 transition-all duration-300">
+        <div className="ml-16 md:ml-32 max-w-full md:max-w-3xl">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg hover:border-[#6a7bff]/10 transition-all duration-300">
             <div className="flex flex-col md:flex-row">
               <div className="relative w-full md:w-64 h-40 md:h-auto">
                 <Image
@@ -124,7 +113,7 @@ const TimelineEvent = React.memo(
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     );
   }
 );
@@ -154,15 +143,7 @@ export default function TimelineEvents({ events = [], loading }: TimelineEventsP
   }
 
   if (!events || events.length === 0) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="mt-6 text-center text-gray-500"
-      >
-        Nu există evenimente disponibile.
-      </motion.div>
-    );
+    return <div className="mt-6 text-center text-gray-500">Nu există evenimente disponibile.</div>;
   }
 
   return (

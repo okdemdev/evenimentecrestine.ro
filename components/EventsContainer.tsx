@@ -15,6 +15,29 @@ interface EventsContainerProps {
   evenimente: IEvent[];
 }
 
+// Add this helper function at the top of the file, outside the component
+const getCategoryPlural = (category: string): string => {
+  // Convert category to lowercase for consistent matching
+  const normalizedCategory = category.toLowerCase();
+
+  const pluralMap: { [key: string]: string } = {
+    all: 'evenimentele',
+    conferințe: 'conferințele',
+    conferinte: 'conferințele',
+    seminarii: 'seminariile',
+    seminar: 'seminariile',
+    concerte: 'concertele',
+    concert: 'concertele',
+    întâlniri: 'întâlnirile',
+    intalniri: 'întâlnirile',
+    tabere: 'taberele',
+    tabără: 'taberele',
+    tabara: 'taberele',
+  };
+
+  return pluralMap[normalizedCategory] || 'evenimentele';
+};
+
 export default function EventsContainer({ evenimente }: EventsContainerProps) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedCity, setSelectedCity] = useState('');
@@ -59,10 +82,17 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
 
   const getEventsHeading = () => {
     if (loading) return 'Evenimente disponibile';
-    if (selectedCity === '') return 'Evenimente din toate orașele';
-    if (selectedCity) return `Evenimente din ${selectedCity}`;
-    if (city) return 'Evenimente din aproprierea ta';
-    return 'Evenimente din toate orașele';
+
+    // Get the category text (capitalize first letter)
+    const categoryText =
+      activeCategory === 'all'
+        ? 'Evenimente'
+        : activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1);
+
+    if (selectedCity === '') return `${categoryText} din toate orașele`;
+    if (selectedCity) return `${categoryText} din ${selectedCity}`;
+    if (city) return `${categoryText} din aproprierea ta`;
+    return `${categoryText} din toate orașele`;
   };
 
   if (loading) {
@@ -109,7 +139,12 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
       </div>
 
       <div className="flex justify-between items-center mt-4">
-        <h2 className="text-base md:text-xl font-bold text-[#333]">Toate evenimentele</h2>
+        <div className="flex items-baseline gap-2">
+          <h2 className="text-base md:text-xl font-bold text-[#333]">
+            Toate {getCategoryPlural(activeCategory)}
+          </h2>
+          <span className="text-sm md:text-base text-gray-500">(din toată țara)</span>
+        </div>
         <button className="text-xs md:text-sm text-[#6a7bff] font-semibold flex items-center gap-1 hover:gap-2 transition-all">
           Vezi toate
           <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4" />
