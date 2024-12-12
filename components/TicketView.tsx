@@ -8,6 +8,7 @@ import { useRef } from 'react';
 
 interface TicketViewProps {
   participant: {
+    name: string;
     email: string;
     phoneNumber: string;
     eventId: {
@@ -38,8 +39,11 @@ export function TicketView({ participant }: TicketViewProps) {
           eventTitle={participant.eventId.title}
           organizer={participant.eventId.organizer}
           location={participant.eventId.location}
-          name={participant.email.split('@')[0]}
-          seat="Orice loc liber"
+          participant={{
+            name: participant.name,
+            email: participant.email,
+            phoneNumber: participant.phoneNumber,
+          }}
           date={formatDate()}
           time={participant.eventId.hour}
         />

@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { CheckCircle, Mail, Phone } from 'lucide-react';
+import { CheckCircle, Mail, Phone, User } from 'lucide-react';
 
 interface ParticipateDialogProps {
   eventId: string;
@@ -16,10 +16,20 @@ interface ParticipateDialogProps {
 }
 
 export function ParticipateDialog({ eventId, isOpen, onClose }: ParticipateDialogProps) {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  // Reset form when dialog closes
+  useEffect(() => {
+    if (!isOpen) {
+      setName('');
+      setEmail('');
+      setPhoneNumber('');
+    }
+  }, [isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +39,7 @@ export function ParticipateDialog({ eventId, isOpen, onClose }: ParticipateDialo
       const response = await fetch('/api/participate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventId, email, phoneNumber }),
+        body: JSON.stringify({ eventId, name, email, phoneNumber }),
       });
 
       const data = await response.json();
@@ -47,7 +57,12 @@ export function ParticipateDialog({ eventId, isOpen, onClose }: ParticipateDialo
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] p-0 overflow-hidden rounded-2xl">
+      <DialogContent
+        className="sm:max-w-[425px] p-0 overflow-hidden rounded-2xl"
+        // Prevent automatic focus on inputs
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        onCloseAutoFocus={(e) => e.preventDefault()}
+      >
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -66,6 +81,24 @@ export function ParticipateDialog({ eventId, isOpen, onClose }: ParticipateDialo
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div className="space-y-4">
             <div className="space-y-2">
+              <Label htmlFor="name" className="text-sm font-medium flex items-center gap-2">
+                <User className="w-4 h-4 text-[#6a7bff]" />
+                Nume și prenume
+              </Label>
+              <Input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Ion Popescu"
+                className="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-[#6a7bff] focus:ring-[#6a7bff]"
+                required
+                autoComplete="name"
+                autoFocus={false}
+              />
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#6a7bff]" />
                 Email
@@ -78,6 +111,9 @@ export function ParticipateDialog({ eventId, isOpen, onClose }: ParticipateDialo
                 placeholder="email@example.com"
                 className="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-[#6a7bff] focus:ring-[#6a7bff]"
                 required
+                // Prevent mobile keyboard from showing up automatically
+                autoComplete="email"
+                autoFocus={false}
               />
             </div>
 
@@ -94,6 +130,9 @@ export function ParticipateDialog({ eventId, isOpen, onClose }: ParticipateDialo
                 placeholder="07xxxxxxxx"
                 className="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-[#6a7bff] focus:ring-[#6a7bff]"
                 required
+                // Prevent mobile keyboard from showing up automatically
+                autoComplete="tel"
+                autoFocus={false}
               />
             </div>
           </div>

@@ -6,6 +6,11 @@ const participantSchema = new mongoose.Schema({
     required: true,
     ref: 'Event',
   },
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   email: {
     type: String,
     required: true,
