@@ -4,6 +4,7 @@ import './globals.css';
 import { Toaster } from 'sonner';
 import { Suspense } from 'react';
 import { GlobalLoading } from '@/components/GlobalLoading';
+import { organizationStructuredData } from '@/utils/structuredData';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -96,6 +97,12 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/icon.png" />
         <meta name="theme-color" content="#6a7bff" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationStructuredData),
+          }}
+        />
       </head>
       <body className={`${poppins.variable} font-poppins antialiased`}>
         <Suspense fallback={<GlobalLoading />}>{children}</Suspense>
