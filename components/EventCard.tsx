@@ -48,8 +48,9 @@ const EventCard = memo(({ event, index }: EventCardProps) => {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="p-1"
     >
-      <Card className="w-[240px] md:w-[300px] shrink-0 transition-transform hover:scale-[1.02]">
+      <Card className="w-[240px] md:w-[300px] shrink-0 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
         <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
           {imageLoading && (
             <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-t-lg" />

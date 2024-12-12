@@ -125,7 +125,7 @@ export default function EventsContainer({ evenimente }: EventsContainerProps) {
 
       <div className="relative">
         <div className="absolute right-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-        <div className="flex gap-3 md:gap-4 overflow-x-auto pb-3 md:pb-4 scroll-smooth snap-x pt-3 scrollbar-hidden">
+        <div className="flex gap-3 md:gap-4 overflow-x-auto pb-3 md:pb-4 scroll-smooth snap-x pt-3 scrollbar-hidden -mx-1">
           {sortedEvents.length > 0 ? (
             sortedEvents.map((eveniment) => (
               <div key={eveniment._id} className="snap-start">
