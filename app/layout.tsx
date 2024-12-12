@@ -38,13 +38,10 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: '/icon.png',
-    shortcut: '/icon.png',
-    apple: '/icon.png',
-    other: {
-      rel: 'apple-touch-icon-precomposed',
-      url: '/icon.png',
-    },
+    icon: [
+      { url: '/icon.png', type: 'image/png' },
+      { url: './icon.png', type: 'image/png' },
+    ],
   },
   manifest: '/manifest.json',
   openGraph: {
@@ -95,7 +92,7 @@ export default function RootLayout({
   return (
     <html lang="ro">
       <head>
-        <link rel="icon" href="/icon.png" />
+        <link rel="shortcut icon" href="/icon.png" />
         <meta name="theme-color" content="#6a7bff" />
         <script
           type="application/ld+json"
