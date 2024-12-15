@@ -141,7 +141,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
           )}
 
           {/* Content for mobile/tablet */}
-          <div className="px-2 -mt-6 relative z-10">
+          <div className="px-2 -mt-2 relative z-10">
             <div className="bg-white rounded-t-2xl">
               <div className="p-4 space-y-6">
                 {/* Header */}
