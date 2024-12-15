@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, CalendarIcon, Clock3Icon, LocateIcon, Loader2, X } from 'lucide-react';
+import { ArrowLeft, CalendarIcon, Clock3Icon, LocateIcon, Loader2, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ShareButton } from '@/components/ShareButton';
 import Link from 'next/link';
@@ -99,7 +99,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
 
           {/* Image Container - Mobile */}
           <div className="px-2">
-            <div
+            <div 
               className="relative bg-gray-50 rounded-2xl overflow-hidden"
               onClick={() => setIsImageFullScreen(true)}
             >
@@ -113,6 +113,11 @@ export default function EventPageClient({ event }: EventPageClientProps) {
                   sizes="100vw"
                   quality={100}
                 />
+              </div>
+              {/* Scroll Indicator */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent pt-12 pb-4 flex flex-col items-center text-white">
+                <p className="text-sm font-medium mb-1">Scroll pentru mai multe informații</p>
+                <ChevronDown className="w-6 h-6 animate-bounce" />
               </div>
             </div>
           </div>
@@ -348,6 +353,11 @@ export default function EventPageClient({ event }: EventPageClientProps) {
         {/* Bottom CTA Bar for Mobile - Always visible */}
         <BottomCTA isVisible={false} />
       </div>
+      <style jsx global>{`
+        .text-shadow {
+          text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+      `}</style>
     </>
   );
 }
