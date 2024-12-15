@@ -7,6 +7,7 @@ const nextConfig = {
       'www.newsnetcrestin.ro',
       'newsnetcrestin.ro', // Added without www. just in case
       'static.iabilet.ro',
+      'instagram.ftsr1-2.fna.fbcdn.net',
     ],
   },
   typescript: {
