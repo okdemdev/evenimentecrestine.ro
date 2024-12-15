@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, CalendarIcon, Clock3Icon, LocateIcon, Loader2 } from 'lucide-react';
+import { ArrowLeft, CalendarIcon, Clock3Icon, LocateIcon, Loader2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ShareButton } from '@/components/ShareButton';
 import Link from 'next/link';
@@ -17,6 +17,7 @@ interface EventPageClientProps {
 
 export default function EventPageClient({ event }: EventPageClientProps) {
   const [isNavigating, setIsNavigating] = useState(false);
+  const [isImageFullScreen, setIsImageFullScreen] = useState(false);
 
   const PriceTag = () => {
     if (event.price.toLowerCase() === 'gratuit') {
@@ -89,7 +90,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
         {/* Mobile/Tablet Layout */}
         <div className="lg:hidden relative">
           {/* Navigation Buttons */}
-          <div className="fixed top-4 left-4 right-4 z-20 flex justify-between items-center">
+          <div className="px-4 py-4 flex justify-between items-center">
             <Link href="/">
               <BackButton />
             </Link>
@@ -98,7 +99,10 @@ export default function EventPageClient({ event }: EventPageClientProps) {
 
           {/* Image Container - Mobile */}
           <div className="px-2">
-            <div className="relative bg-gray-50 rounded-2xl overflow-hidden">
+            <div
+              className="relative bg-gray-50 rounded-2xl overflow-hidden"
+              onClick={() => setIsImageFullScreen(true)}
+            >
               <div className="relative w-full h-[calc(100vw-16px)]">
                 <Image
                   src={event.image}
@@ -112,6 +116,29 @@ export default function EventPageClient({ event }: EventPageClientProps) {
               </div>
             </div>
           </div>
+
+          {/* Full Screen Image Modal */}
+          {isImageFullScreen && (
+            <div className="fixed inset-0 z-50 bg-black">
+              <button
+                onClick={() => setIsImageFullScreen(false)}
+                className="absolute top-4 right-4 z-50 p-2 bg-black/50 rounded-full"
+              >
+                <X className="w-6 h-6 text-white" />
+              </button>
+              <div className="relative w-full h-full">
+                <Image
+                  src={event.image}
+                  alt={event.title}
+                  fill
+                  className="object-contain"
+                  priority
+                  sizes="100vw"
+                  quality={100}
+                />
+              </div>
+            </div>
+          )}
 
           {/* Content for mobile/tablet */}
           <div className="px-2 -mt-6 relative z-10">
