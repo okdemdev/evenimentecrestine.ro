@@ -39,9 +39,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/icon.png', type: 'image/png' },
-      { url: './icon.png', type: 'image/png' },
-    ],
+      { url: '/icon.png', type: 'image/png' }
+    ]
   },
   manifest: '/manifest.json',
   openGraph: {
@@ -92,7 +91,7 @@ export default function RootLayout({
   return (
     <html lang="ro">
       <head>
-        <link rel="shortcut icon" href="/icon.png" />
+        <link rel="icon" type="image/png" href="/icon.png" />
         <meta name="theme-color" content="#6a7bff" />
         <script
           type="application/ld+json"
