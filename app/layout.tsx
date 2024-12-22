@@ -38,9 +38,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: [
-      { url: '/icon.png', type: 'image/png' }
-    ]
+    icon: '/icon.png',
   },
   manifest: '/manifest.json',
   openGraph: {
