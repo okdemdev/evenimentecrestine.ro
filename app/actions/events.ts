@@ -5,14 +5,19 @@ import Event from '@/models/Event';
 import { IEvent } from '@/types';
 
 export async function getEvents(): Promise<IEvent[]> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   try {
     await dbConnect();
-    const events = await Event.find({}).sort({ createdAt: -1 });
+    const events = await Event.find({})
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
+    
+    console.log(`Fetched ${events.length} events`);
+    
     return JSON.parse(JSON.stringify(events));
   } catch (error) {
     console.error('Failed to fetch events:', error);
-    return [];
+    throw error;
   }
 }
 
