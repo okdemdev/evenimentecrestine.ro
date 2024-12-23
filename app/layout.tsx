@@ -5,6 +5,7 @@ import { Toaster } from 'sonner';
 import { Suspense } from 'react';
 import { GlobalLoading } from '@/components/GlobalLoading';
 import { organizationStructuredData } from '@/utils/structuredData';
+import { Analytics } from '@vercel/analytics/react';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -89,6 +90,7 @@ export default function RootLayout({
   return (
     <html lang="ro">
       <head>
+        <Analytics />
         <link rel="icon" type="image/png" href="/icon.png" />
         <meta name="theme-color" content="#6a7bff" />
         <script
