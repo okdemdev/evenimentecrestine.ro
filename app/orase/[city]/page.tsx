@@ -6,6 +6,7 @@ import { getEvents } from '@/app/actions/events';
 import { extractCity } from '@/utils/eventUtils';
 import { generateEventStructuredData } from '@/utils/structuredData';
 import CityHeroImage from '@/components/CityHeroImage';
+import CityEventCard from '@/components/CityEventCard';
 
 // List of major cities we want to generate pages for
 const majorCities = [
@@ -31,7 +32,7 @@ function formatCityForPath(city: string): string {
 
 // Function to get city image path
 function getCityImagePath(city: string): string {
-  return `/images/cities/${formatCityForPath(city)}.jpg`;
+  return `/images/cities/${formatCityForPath(city)}.jpeg`;
 }
 
 // Generate static params for major cities
@@ -142,19 +143,7 @@ export default async function CityPage({ params }: { params: { city: string } })
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {cityEvents.map((event) => (
-              <div
-                key={event._id.toString()}
-                className="bg-white rounded-lg shadow-md overflow-hidden"
-              >
-                {/* Event card content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
-                  <p className="text-gray-600 mb-4">{event.location}</p>
-                  <p className="text-gray-500">
-                    {event.day} {event.month}
-                  </p>
-                </div>
-              </div>
+              <CityEventCard key={event._id.toString()} event={event} />
             ))}
           </div>
         </div>
