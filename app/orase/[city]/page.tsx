@@ -17,6 +17,19 @@ const majorCities = [
   'Brașov'
 ];
 
+// Function to get city image path
+const getCityImagePath = (cityName: string): string => {
+  const normalizedCityName = cityName.toLowerCase()
+    .replace('ș', 's')
+    .replace('ț', 't')
+    .replace('ă', 'a')
+    .replace('â', 'a')
+    .replace('î', 'i')
+    .replace('-', '_');
+    
+  return `/images/cities/${normalizedCityName}.jpg`;
+};
+
 export async function generateStaticParams() {
   return majorCities.map((city) => ({
     city: city.toLowerCase(),
@@ -77,11 +90,16 @@ export default async function CityPage({ params }: { params: { city: string } })
       {/* Hero Section */}
       <div className="relative h-[50vh] min-h-[400px] w-full">
         <Image
-          src="/images/cities/default-city.jpg" // You'll need to add city-specific images
+          src={getCityImagePath(formattedCity)}
           alt={`Evenimente Creștine în ${formattedCity}`}
           fill
           className="object-cover brightness-50"
           priority
+          onError={(e) => {
+            // Fallback to default image if city image doesn't exist
+            const target = e.target as HTMLImageElement;
+            target.src = '/images/cities/default.jpg';
+          }}
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
