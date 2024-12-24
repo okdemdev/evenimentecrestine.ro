@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getEvents } from '@/app/actions/events';
-import { romanianCities } from '@/utils/cities';
 import { extractCity } from '@/utils/eventUtils';
 import { generateEventStructuredData } from '@/utils/structuredData';
 
