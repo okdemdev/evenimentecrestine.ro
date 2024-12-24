@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     'Descoperă cele mai importante evenimente creștine din România. Participă la conferințe, concerte, seminarii și întâlniri creștine în comunitatea ta.',
   keywords: [
     'evenimente crestine',
-    'evenimente crestine timisoara',
+    'evenimente crestine romania',
     'conferinte crestine',
     'intalniri crestine',
     'concerte crestine',
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     title: 'Evenimente Creștine | Conferințe și întâlniri creștine în România',
     description:
       'Descoperă cele mai importante evenimente creștine din România. Participă la conferințe, concerte, seminarii și întâlniri creștine în comunitatea ta.',
-    images: ['/og-image.jpg'], // Same as OpenGraph image
+    images: ['/og-image.jpg'],
   },
   viewport: {
     width: 'device-width',
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     maximumScale: 1,
   },
   verification: {
-    google: 'your-google-site-verification', // You'll need to add this
+    google: 'YVfZpJ3t-H-AiLEmZcwBNEGosZR92YB7EPc',
   },
   alternates: {
     canonical: 'https://evenimentecrestine.ro',

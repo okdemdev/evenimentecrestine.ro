@@ -1,5 +1,13 @@
+# Allow all crawlers
 User-agent: *
 Allow: /
 
-# Sitemaps
-Sitemap: https://evenimentecrestine.ro/sitemap.xml 
+# Sitemap location
+Sitemap: https://evenimentecrestine.ro/sitemap.xml
+
+# Prevent crawling of search results
+Disallow: /search
+Disallow: /api/
+
+# Crawl delay for better server performance
+Crawl-delay: 10 
