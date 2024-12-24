@@ -103,21 +103,21 @@ export default function EventPageClient({ event }: EventPageClientProps) {
               className="relative bg-gray-50 rounded-2xl overflow-hidden"
               onClick={() => setIsImageFullScreen(true)}
             >
-              <div className="relative w-full h-[calc(100vw-16px)]">
+              <div className="relative w-full aspect-auto">
+                {/* Scroll Indicator - Moved to top */}
+                <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/50 via-black/30 to-transparent pt-2 pb-8 flex flex-col items-center text-white">
+                  <p className="text-sm font-medium mb-1">Scroll pentru mai multe informații</p>
+                  <ChevronDown className="w-6 h-6 animate-bounce" />
+                </div>
                 <Image
                   src={event.image}
                   alt={event.title}
-                  fill
-                  className="object-cover"
+                  width={1200}
+                  height={675}
+                  className="w-full h-auto"
                   priority
-                  sizes="100vw"
                   quality={100}
                 />
-              </div>
-              {/* Scroll Indicator */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent pt-12 pb-4 flex flex-col items-center text-white">
-                <p className="text-sm font-medium mb-1">Scroll pentru mai multe informații</p>
-                <ChevronDown className="w-6 h-6 animate-bounce" />
               </div>
             </div>
           </div>
