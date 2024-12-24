@@ -10,6 +10,7 @@ const nextConfig = {
       'instagram.ftsr1-2.fna.fbcdn.net',
       'scontent.ftsr1-1.fna.fbcdn.net',
       'facebook.com',
+      'res.cloudinary.com',
     ],
   },
   typescript: {
