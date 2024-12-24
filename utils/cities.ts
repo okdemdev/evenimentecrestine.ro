@@ -3,6 +3,7 @@ export const romanianCities = [
   'Cluj-Napoca',
   'Timișoara',
   'Iași',
+  'Deva',
   'Constanța',
   'Craiova',
   'Brașov',
