@@ -1,10 +1,12 @@
 'use server';
 
+import { unstable_noStore as noStore } from 'next/cache';
 import dbConnect from '@/lib/mongodb';
 import Event from '@/models/Event';
 import { IEvent } from '@/types';
 
 export async function getEvents(): Promise<IEvent[]> {
+  noStore();
   try {
     await dbConnect();
     const events = await Event.find({})

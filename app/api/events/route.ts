@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import dbConnect from '@/lib/mongodb';
 import Event from '@/models/Event';
 
@@ -21,10 +22,20 @@ export async function POST(request: Request) {
       ...rest,
       month,
       day,
-      location, // Add the combined location
+      location,
     });
 
-    return NextResponse.json({ success: true, eventId: event._id });
+    // Revalidate the home page after creating a new event
+    revalidatePath('/');
+
+    return NextResponse.json(
+      { success: true, eventId: event._id },
+      {
+        headers: {
+          'Cache-Control': 'no-store, must-revalidate',
+        },
+      }
+    );
   } catch (error) {
     console.error('Error creating event:', error);
     return NextResponse.json({ error: 'Failed to create event' }, { status: 500 });
@@ -35,7 +46,12 @@ export async function GET() {
   try {
     await dbConnect();
     const events = await Event.find({}).sort({ createdAt: -1 });
-    return NextResponse.json(events);
+    
+    return NextResponse.json(events, {
+      headers: {
+        'Cache-Control': 'no-store, must-revalidate',
+      },
+    });
   } catch (error) {
     console.error('Error fetching events:', error);
     return NextResponse.json({ error: 'Failed to fetch events' }, { status: 500 });

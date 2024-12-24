@@ -4,6 +4,9 @@ import { getEvents } from '@/app/actions/events';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import SearchForm from '@/components/SearchForm';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function Home() {
   const events = await getEvents();
   
